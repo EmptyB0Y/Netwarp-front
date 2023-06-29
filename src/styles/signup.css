@@ -1,7 +1,7 @@
 body{
     background-image: linear-gradient(to bottom, #ffffff 0%, hsl(300, 23%, 18%) 100%);
 }
-#root-container{
+#signup-root-container{
     display: flex;
     flex-direction: row;
     padding-top: 5%;
@@ -73,7 +73,7 @@ input{
 .form-error{
     background-color: rgb(226, 59, 59);
     border-radius: 8px;
-    width: 500px;
+    width: 200px;
     text-align: center;
     color: white;
     display: none;

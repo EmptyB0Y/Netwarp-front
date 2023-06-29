@@ -2,14 +2,13 @@ import '../styles/Login.css'
 import arrow from '../assets/Icons/arrow-right.webp'
 import logo from '../assets/Logos/Net-Warp_logo.png'
 import {Signup} from './Signup'
-import {LoginUser} from '../services/credentials.service'
-import {ReactSession} from 'react-session'
+import {loginUser} from '../services/credentials.service'
 import ReactDOM from 'react-dom'
 
 export const Login = () => {
 
     return (
-            <div id='root-container'>
+            <div id='login-root-container'>
                 <div id='login-container'>
                     <div id='login-component'>
                         <h1 id='login-form-title'>LOG IN :</h1>
@@ -21,6 +20,7 @@ export const Login = () => {
                                 <input name='password-input' type='password' />
                                 <button id='submit-button' name='submit'><img alt='submit' id='arrow-submit' src={arrow}></img></button>
                             </form>
+                            <p class='login-form-error' id='login-error'>Login failed</p>
                             <span id='signup-link' onClick={handleClick}>Sign up here</span>
                         </div>
                     </div>
@@ -37,18 +37,18 @@ export const Login = () => {
 
 function handleSubmit(e) {
     e.preventDefault()
+    e.stopPropagation()
+
     const email = e.target['email-input'].value;
     const password = e.target['password-input'].value;
-        LoginUser(email,password).then((data) => {
+        loginUser(email,password).then((data) => {
             if(data.token){
-                ReactSession.set("userId",data.userId);
-                ReactSession.set("token",data.token);
-                sessionStorage.setItem("userId",data.userId)
-                sessionStorage.setItem("token",data.token)
+                sessionStorage.setItem("userId",data.userId);
+                sessionStorage.setItem("token",data.token);
                 window.location.reload();
             }
             else{
-                alert("Error during the logging !")
+                document.getElementById("login-error").style.display = "block";
             }
         });
 }
