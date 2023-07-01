@@ -66,6 +66,7 @@ input{
     color: black;
     align-self: flex-start;
     font-size: bold;
+    text-decoration: none;
 }
 #signup-link:hover{
     cursor: pointer;
