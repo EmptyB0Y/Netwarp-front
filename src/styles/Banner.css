@@ -1,4 +1,4 @@
-#banner-root-container{
+#banner{
     background-image: linear-gradient(to bottom, #ffffff 0%, hsl(275, 19%, 35%) 100%);
     display: flex;
     flex-direction: row;
@@ -32,4 +32,44 @@
 #logo{
     width: 55px;
     height: 55px;
+}
+#banner-title{
+    margin-left: 20px;
+    align-self: center;
+}
+#navbar-connected{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #C9BEEA;
+}
+#menu-button{
+    background-color: transparent;
+    border: none;
+}
+#notifications-button{
+    background-color: transparent;
+    border: none;
+}
+#menu-icon{
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    margin: 2px;
+}
+#menu-icon:hover{
+    cursor: pointer;
+}
+#bell-icon{
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    margin: 2px;
+    background-color: #888DBF;
+    border: 1px solid black;
+    border-radius: 100%;
+}
+
+#bell-icon:hover{
+    cursor: pointer;
 }

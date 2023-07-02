@@ -47,7 +47,8 @@ export const Login = () => {
                 if(data.token){
                     sessionStorage.setItem("userId",data.userId);
                     sessionStorage.setItem("token",data.token);
-                    navigate('/home');            
+                    navigate('/home');   
+                    window.location.reload();         
                 }
                 else{
                     document.getElementById("login-error").style.display = "block";
