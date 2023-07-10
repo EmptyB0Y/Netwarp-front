@@ -1,12 +1,11 @@
 import axios from "axios";
-import {ReactSession} from 'react-session'
 
 const BASE_URL = "http://127.0.0.1:3000/profiles/"
 
-export const createProfile = (username, description) => {
+export const createProfile =  async (username, description="") => {
 
     const options = {
-        headers: { Authorization: 'Bearer '+ReactSession.getItem("token") }
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
     };
 
     const bodyParameters = {
@@ -15,6 +14,17 @@ export const createProfile = (username, description) => {
         };
     
     return axios.post(BASE_URL, bodyParameters,options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}
+
+export const getProfile = async (userId) => {
+
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    return axios.get(BASE_URL+userId,options)
       .then((res) => {return res.data;})
       .catch((err) => err)
 }

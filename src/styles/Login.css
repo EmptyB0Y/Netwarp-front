@@ -2,6 +2,8 @@ body{
     background-image: linear-gradient(to bottom, #ffffff 0%, hsl(300, 23%, 18%) 100%);
 }
 #login-root-container{
+    position: relative;
+    top: 55px;
     display: flex;
     flex-direction: row;
     padding-top: 5%;

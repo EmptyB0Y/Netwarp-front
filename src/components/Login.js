@@ -45,7 +45,7 @@ export const Login = () => {
         const password = e.target['password-input'].value;
             loginUser(email,password).then((data) => {
                 if(data.token){
-                    sessionStorage.setItem("userId",data.userId);
+                    sessionStorage.setItem("profileId",data.profileId);
                     sessionStorage.setItem("token",data.token);
                     navigate('/home');   
                     window.location.reload();         

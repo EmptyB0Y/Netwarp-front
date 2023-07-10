@@ -1,5 +1,5 @@
 import '../styles/Banner.css'
-import logo from '../assets/Logos/Net-Warp_logo.png'
+import logo from '../assets/Logos/Net-Warp_logo2.png'
 import menu from '../assets/Icons/menu.png'
 import bell from '../assets/Icons/bell.png'
 import { Link } from "react-router-dom";
@@ -9,12 +9,22 @@ export const Banner = () => {
         return (
             <div id='banner-root-container' >
                 <div id='banner'>
+                    <Link to='/home'>
                     <img id='logo' alt='logo' src={logo}></img>
-                    <h1 id='banner-title'>WARP</h1>
+                    </Link>
                 </div>
                 <div id='navbar-connected'>
-                    <button id='menu-button'><img id='menu-icon' alt='menu' src={menu}/></button>
-                    <button id='notifications-button'><img id='bell-icon' alt='notifications' src={bell}/></button>
+                    <button id='menu-button'>
+                        <img id='menu-icon' alt='menu' src={menu}/>
+                        <div id='menu'>
+                            <Link to='/profile'> PROFILE </Link>
+                        </div>
+                    </button>
+                    <button id='notifications-button'>
+                        <img id='bell-icon' alt='notifications' src={bell}/>
+                        <div id='notifications'>
+                        </div>
+                    </button>
                 </div>
             </div>
             ) 

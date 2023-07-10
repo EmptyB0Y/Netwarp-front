@@ -2,6 +2,8 @@ import {Login} from './Login'
 import {Home} from './Home'
 import { Signup } from './Signup'
 import { Banner } from './Banner'
+import { Profile } from './Profile'
+import { Footer } from './Footer'
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 
 function App() {
@@ -19,7 +21,9 @@ function App() {
           <Route path="/login" element={ <Login />}></Route>
           <Route path="/signup" element={ <Signup /> }></Route>
           <Route path="/home" element={ <Home />}></Route>
+          <Route path="/profile" element={ <Profile /> }></Route>
       </Routes>
+      <Footer />
   </Router> 
   </div> 
   )

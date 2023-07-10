@@ -1,3 +1,8 @@
+#banner-root-container{
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
 #banner{
     background-image: linear-gradient(to bottom, #ffffff 0%, hsl(275, 19%, 35%) 100%);
     display: flex;
@@ -8,7 +13,6 @@
     min-width: 500px;
     height: 50px;
 }
-
 #navbar{
     width: 40%;
     display: flex;
@@ -30,7 +34,7 @@
     cursor: pointer;
 }
 #logo{
-    width: 55px;
+    width: 155px;
     height: 55px;
 }
 #banner-title{
@@ -38,6 +42,8 @@
     align-self: center;
 }
 #navbar-connected{
+    position: absolute;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -72,4 +78,44 @@
 
 #bell-icon:hover{
     cursor: pointer;
+}
+
+#menu-button:focus #menu{
+    animation: slideright 1s forwards;
+}
+
+#menu{
+    position: absolute;
+    left: -300px;
+    width: 300px;
+    height: 700px;
+    background-color: gray;
+    opacity: 0.9;
+}
+#notifications{
+    position: absolute;
+    right: -300px;
+    width: 300px;
+    height: 700px;
+    background-color: gray;
+    opacity: 0.9;
+}
+#notifications-button:focus #notifications{
+    animation: slideleft 1s forwards;
+}
+
+#menu:hover{
+    left: 0px;
+}
+
+#notifications:hover{
+    right: 0px;
+}
+
+@keyframes slideright {
+    100% {left: 0px;}
+}
+
+@keyframes slideleft {
+    100% {right: 0px;}
 }

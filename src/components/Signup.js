@@ -1,7 +1,8 @@
 import '../styles/signup.css'
 import arrow from '../assets/Icons/arrow-right.webp'
 import logo from '../assets/Logos/Net-Warp_logo.png'
-import {signupUser} from '../services/credentials.service'
+import {loginUser, signupUser} from '../services/credentials.service'
+import { createProfile } from '../services/profiles.service'
 import { Link, useNavigate } from "react-router-dom";
 
 export const Signup = () => {
@@ -96,12 +97,25 @@ export const Signup = () => {
     
         if(pass) {
             signupUser(email,password).then((data) => {
-                console.log(data.name);
+                console.log(data.name)
                 if(data.name === 'Error'){
                     document.getElementById("signup-error").style.display = "block";
                 }
                 else{
-                    navigate('/login');
+                    loginUser(email, password).then((data) => {
+                        if(data.token){
+                            sessionStorage.setItem("profileId",data.profileId);
+                            sessionStorage.setItem("token",data.token);
+
+                            createProfile(username).then( () => {
+                                navigate('/home');   
+                                window.location.reload();         
+                            })
+                        }
+                        else{
+                            document.getElementById("login-error").style.display = "block";
+                        }
+                    })
                 }
             });
         }
