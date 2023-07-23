@@ -13,3 +13,19 @@ export const getPosts = async (topic) => {
       .then((res) => {return res.data;})
       .catch((err) => err)
 }
+
+export const createPost = async (content, topic) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    const bodyParameters = {
+        content : content,
+        topic : topic
+        };
+    
+    console.log('submit')
+    return axios.post(BASE_URL, bodyParameters,options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}

@@ -1,15 +1,17 @@
-import '../styles/Post.css';
+import '../styles/Comment.css';
 import arrow from '../assets/Icons/arrow-right.webp'
-import { useState, useEffect } from 'react'
 import { getProfile } from '../services/profiles.service'
+import { useState, useEffect } from 'react'
 import { Comments } from './Comments'
 import { createComment } from '../services/comments.service';
 import { Link } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize'
 
-export const Post = ({ProfileId, MissionId, content, topic, id }) => {
+export const Comment = ({ProfileId, PostId, CommentId, content, id, level}) => {
+
     const [profile,setProfile] = useState(null);
-    
+    const [reply,setReply] = useState(false);
+
     useEffect(() => {
             getProfile(ProfileId)
             .then(data => {
@@ -17,11 +19,13 @@ export const Post = ({ProfileId, MissionId, content, topic, id }) => {
             })
             .catch((err) => console.log(err))
       }, [ProfileId])
+      
     
     let formElement = (<Link to='/login' className='form-element'>Log in to comment</Link>)
 
     if(sessionStorage.getItem('token')){
-            formElement = (            
+
+        formElement = (            
         <form className='form-element' onSubmit={(e) => handleSubmit(e)}>
             <TextareaAutosize className='comment-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
             <button type='submit'><img alt='submit' className='comment-submit-icon' src={arrow}/></button>
@@ -30,41 +34,36 @@ export const Post = ({ProfileId, MissionId, content, topic, id }) => {
     }
 
     if(profile !== null) {
-        return (        
-            <div className='post-root-container'>
-                <div className='post-author'>
-                    <img alt='profile' className='author-picture' src={profile.pictureUrl}/>
-                    <p className='author-username' >{profile.username}</p>
-                </div>
-                <div className='post-topic'>
-                    <p>#{topic}</p>
-                </div>
-                <div className='post-content'>
-                    {content}
-                </div>
-                <div className='comments-frame'>
-                    <Comments PostId={id} />
-                </div>
-                {formElement}
+        return (
+        <div className='comment-root-container' >
+            <div className='comment-author'>
+                <img alt='profile' className='author-picture' src={profile.pictureUrl}/>
+                <p className='author-username' >{profile.username}</p>        
             </div>
+            <div className='comment-content'>
+                {content}
+            </div>
+            <Comments CommentId={id} level={level}/>
+            {formElement}
+        </div>
         )
     }
-    
+
     return (
-        <div className='post-root-container'>
+        <div className='comment-root-container'>
             <p>...</p>
         </div>
     )
     function handleSubmit(e) {
         e.preventDefault()
         e.stopPropagation()
-        console.log('Submit '+ id)
+        
         const content = e.target['content'].value;
 
         if(id){
-            createComment(content,id).then(() => {
-                window.location.reload()
+            createComment(content,PostId,id).then(() => {
+                //window.location.reload()
             });
         }
     }
-}
+}   

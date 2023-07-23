@@ -1,13 +1,17 @@
-import '../styles/signup.css'
+import '../styles/Signup.css'
 import arrow from '../assets/Icons/arrow-right.webp'
 import logo from '../assets/Logos/Net-Warp_logo.png'
 import {loginUser, signupUser} from '../services/credentials.service'
 import { createProfile } from '../services/profiles.service'
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 
 export const Signup = () => {
 
     const navigate = useNavigate();
+
+    if(sessionStorage.getItem('token')){
+        return (<Navigate to='/home' />)
+    }
 
     return (
             <div>
@@ -39,7 +43,7 @@ export const Signup = () => {
                     </div>
                     <div id='welcome-container'>
                         <div id='welcome-component'>
-                            <p id='welcome-paragraph'>Welcome to Net-Warp</p>
+                            <p id='welcome-paragraph'>Welcome to Warp</p>
                             <img id='big-logo' alt='logo' src={logo}></img>
                         </div>
                     </div>

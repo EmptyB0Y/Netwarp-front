@@ -1,39 +1,41 @@
 import '../styles/Home.css'
-import { useNavigate } from "react-router-dom";
+import arrow from '../assets/Icons/arrow-right.webp'
+//import { useNavigate } from "react-router-dom";
 import { Post } from './Post'
 //import { getPosts } from '../services/mockdata'
 import { useState, useEffect } from 'react'
-import { getPosts } from '../services/posts.service'
-import { getProfile } from '../services/profiles.service'
+import { getPosts, createPost } from '../services/posts.service'
+//import { getProfile } from '../services/profiles.service'
+import TextareaAutosize from 'react-textarea-autosize'
 
 export const Home = () => {
-    const navigate = useNavigate();
-    const [profile,setProfile] = useState(null);
+
+    //const [profile,setProfile] = useState(null);
     const [posts, setPosts] = useState([]);
     const [load,setLoad] = useState(false);
     const [change,setChange] = useState(false);
     const [topic,setTopic] = useState('general');
 
-    useEffect(() => {
-        if(sessionStorage.getItem('profileId')){
-            getProfile(sessionStorage.getItem('profileId'))
-            .then(data => {
-                setProfile(data)
-                console.log(data);
-                //refresh()
-            })
-            .catch((err) => console.log(err))
-        }
-      }, [change])
+    // useEffect(() => {
+    //     if(sessionStorage.getItem('profileId')){
+    //         getProfile(sessionStorage.getItem('profileId'))
+    //         .then(data => {
+    //             setProfile(data)
+    //             console.log(data);
+    //             //refresh()
+    //         })
+    //         .catch((err) => console.log(err))
+    //     }
+    //   }, [change])
 
     useEffect(() => {
         getPosts(topic)
         .then(data => {
-            setPosts(data)
+            setPosts(data.reverse())
             setLoad(true)
         })
         .catch((err) => console.log(err)) 
-      }, [topic])
+      }, [topic,change])
 
     //let posts = getPosts();
     const refresh = () => {
@@ -47,7 +49,7 @@ export const Home = () => {
 
         postsElement = (posts.map(post => 
         <div className='post' key={post.id}>
-            <Post ProfileId={post.ProfileId} MissionId={post.MissionId} content={post.content} topic={post.topic}/> 
+            <Post ProfileId={post.ProfileId} MissionId={post.MissionId} content={post.content} topic={post.topic} id={post.id}/> 
         </div>))
 
         if(posts === []){
@@ -58,7 +60,11 @@ export const Home = () => {
     if(sessionStorage.getItem('token')) {
         return (
             <div id='home-root-container'>
-                <button id='signout-button' onClick={handleClick}>SIGN OUT</button>
+                    <form id='add-post-form' onSubmit={(e) => handleSubmit(e)}>
+                        <TextareaAutosize id='post-input' role='textbox' placeholder="Something to say ?" name="content" rows="4"/>
+                        <button id='post-submit' type='submit'><img alt='submit' id='post-submit-icon' src={arrow}/></button>
+                    </form>
+
                 <div id='posts'>
                     {postsElement}
                 </div>
@@ -74,10 +80,16 @@ export const Home = () => {
         </div>
     )
 
-    function handleClick(){
-        sessionStorage.removeItem('token')
-        sessionStorage.removeItem('profileId')
-        navigate('/login');
-        window.location.reload();         
+    function handleSubmit(event){
+        event.preventDefault()
+        event.stopPropagation()
+
+        if(event.target['content'].value !== ""){
+            createPost(event.target['content'].value,topic).then( () => {
+                refresh()
+                document.getElementById('post-input').value = ""
+            })
+        }
+
     }
 }

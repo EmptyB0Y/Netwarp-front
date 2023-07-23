@@ -7,6 +7,7 @@ body{
     top: 90px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding-top: 5%;
     min-width: 500px;
     min-height: 700px;
@@ -17,6 +18,61 @@ body{
     height: 50px;
 }
 
+#posts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .post{
     padding: 10px;
+    width: 700px;
+}
+
+.comments-frame{
+    background-image: linear-gradient(to bottom, #ffffff 0%, hsl(300, 23%, 18%) 100%);
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.comments{
+    background-image: linear-gradient(to bottom, #ffffff 0%, hsl(300, 23%, 18%) 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+.comment{
+    padding: 10px;
+    width: 500px;
+}
+.block{
+    background-color: black;
+    height: 40px;
+    width: 40px;
+}
+.form-element{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+#add-post-form{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+}
+
+#post-input{
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 50px !important;
+}
+
+#post-submit{
+    max-width: 10%;
+}
+
+#post-submit-icon{
+    height: 20px;
+    width: 30px;
 }

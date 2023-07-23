@@ -1,11 +1,10 @@
-.post-root-container{
-    background-color: aliceblue;
+.comment-root-container{
+    background-color: rgb(169, 187, 202);
     display: flex;
     flex-direction: column;
     border-radius: 10px;
 }
-
-.post-author{
+.comment-author{
     width: 100%;
     border-bottom: 1px solid black;
     display: flex;
@@ -19,29 +18,19 @@
     width: 45px;
     height: 45px;
 }
-
 .author-username{
     padding-top: 5px;
     padding-left: 5px;
     font-size: 17px;
 }
-
-.post-topic p{
-    padding-left: 5px;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.post-content{
+.comment-content{
     padding: 10px;
 }
-
 .comment-input{
     max-width: 100%;
     min-width: 100%;
     min-height: 20px;
 }
-
 .comment-submit-icon{
     height: 20px;
     width: 30px;
