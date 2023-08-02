@@ -27,6 +27,10 @@ export const getCommentsByComment = async (CommentId) => {
 }
 
 export const createComment = async (content, postId, commentId=null) => {
+    if(content === null || content === ""){
+        alert("You can't send a blank comment")
+        return
+    }
     const options = {
         headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
     };
@@ -38,6 +42,17 @@ export const createComment = async (content, postId, commentId=null) => {
         };
 
     return axios.post(BASE_URL, bodyParameters,options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}
+
+export const deleteComment = async (commentId) => {
+
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    return axios.delete(BASE_URL+commentId,options)
       .then((res) => {return res.data;})
       .catch((err) => err)
 }

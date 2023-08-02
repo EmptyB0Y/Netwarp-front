@@ -45,7 +45,6 @@ export const Home = () => {
     let postsElement = (<div>Loading...</div>);
     
     if(load){
-        console.log("test")
 
         postsElement = (posts.map(post => 
         <div className='post' key={post.id}>

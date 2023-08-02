@@ -55,7 +55,14 @@ body{
     flex-direction: column;
     padding: 10px;
 }
-
+.form-element-comment{
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+}
+.reply-comment{
+    display: block;
+}
 #add-post-form{
     display: flex;
     flex-direction: column;
