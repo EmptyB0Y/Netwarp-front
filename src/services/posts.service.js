@@ -9,7 +9,19 @@ export const getPosts = async (topic) => {
     };
 
     
-    return axios.get(BASE_URL+topic,options)
+    return axios.get(BASE_URL+"topic/"+topic,options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}
+
+export const getPost = async (id) => {
+
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    console.log(BASE_URL+id)
+    return axios.get(BASE_URL+id,options)
       .then((res) => {return res.data;})
       .catch((err) => err)
 }

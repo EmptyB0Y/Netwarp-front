@@ -6,18 +6,27 @@ import { Comments } from './Comments'
 import { createComment } from '../services/comments.service';
 import { Link } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize'
+import {useNavigate} from "react-router-dom";
+import { deleteComment } from '../services/comments.service';
 
 export const Post = ({ProfileId, MissionId, content, topic, id }) => {
     const [profile,setProfile] = useState(null);
-    
+    const [change,setChange] = useState(false);
+
+    let navigate = useNavigate();
+
     useEffect(() => {
             getProfile(ProfileId)
             .then(data => {
                 setProfile(data)
             })
             .catch((err) => console.log(err))
-      }, [ProfileId])
+      }, [ProfileId, change])
     
+    const refresh = () => {
+        setChange(!change);
+    }
+
     let formElement = (<Link to='/login' className='form-element'>Log in to comment</Link>)
 
     if(sessionStorage.getItem('token')){
@@ -39,11 +48,11 @@ export const Post = ({ProfileId, MissionId, content, topic, id }) => {
                 <div className='post-topic'>
                     <p>#{topic}</p>
                 </div>
-                <div className='post-content'>
+                <div className='post-content' onClick={handleClick}>
                     {content}
                 </div>
                 <div className='comments-frame'>
-                    <Comments PostId={id} />
+                    <Comments PostId={id} change={change} deleteFunction={handleDeleteComment}/>
                 </div>
                 {formElement}
             </div>
@@ -58,13 +67,26 @@ export const Post = ({ProfileId, MissionId, content, topic, id }) => {
     function handleSubmit(e) {
         e.preventDefault()
         e.stopPropagation()
-        console.log('Submit '+ id)
+
         const content = e.target['content'].value;
 
         if(id){
             createComment(content,id).then(() => {
-                window.location.reload()
+                refresh()
             });
         }
     }
+
+    function handleClick() {
+        navigate('/focus-post/' + id)
+    }
+    
+    function handleDeleteComment(e){
+        console.log(e.target.parentNode.parentNode.parentNode.id)
+        deleteComment(e.target.parentNode.parentNode.parentNode.id).then((data) =>{
+            console.log(data)
+            refresh()
+        })
+    }
+
 }

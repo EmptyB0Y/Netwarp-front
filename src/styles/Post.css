@@ -36,6 +36,9 @@
     padding: 10px;
 }
 
+.post-content:hover{
+    cursor: pointer;
+}
 .comment-input{
     max-width: 100%;
     min-width: 100%;

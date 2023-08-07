@@ -3,6 +3,7 @@ import {Home} from './Home'
 import { Signup } from './Signup'
 import { Banner } from './Banner'
 import { Profile } from './Profile'
+import { FocusPost } from './FocusPost'
 import { Footer } from './Footer'
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signup" element={ <Signup /> }></Route>
           <Route path="/home" element={ <Home />}></Route>
           <Route path="/profile" element={ <Profile /> }></Route>
+          <Route path="/focus-post/:id" element={ <FocusPost /> }></Route>
       </Routes>
       <Footer />
   </Router> 

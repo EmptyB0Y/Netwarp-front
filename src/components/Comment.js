@@ -4,13 +4,13 @@ import cross from '../assets/Icons/cross.png'
 import { getProfile } from '../services/profiles.service'
 import { useState, useEffect } from 'react'
 import { Comments } from './Comments'
-import { createComment, deleteComment } from '../services/comments.service';
+import { createComment } from '../services/comments.service';
 import { Link } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize'
 
-export const Comment = ({ProfileId, PostId, CommentId, content, id, level}) => {
-
+export const Comment = ({ProfileId, PostId, CommentId, content, id, level, deleteFunction}) => {
     const [profile,setProfile] = useState(null);
+    const [change,setChange] = useState(false);
 
     useEffect(() => {
             getProfile(ProfileId)
@@ -18,9 +18,12 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level}) => {
                 setProfile(data)
             })
             .catch((err) => console.log(err))
-      }, [ProfileId])
+      }, [change, ProfileId])
       
-    
+    const refresh = () => {
+        setChange(!change);
+    }
+
     let formElement = (<Link to='/login' className='form-element-comment'>Log in to comment</Link>)
 
     let deleteCommentElement = (<div></div>)
@@ -39,7 +42,7 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level}) => {
         }
 
         if(ProfileId == sessionStorage.getItem('profileId')){
-            deleteCommentElement = (<img onClick={(e) => handleDeleteComment(e)} alt='delete comment' className='delete-comment-icon' src={cross}/>)
+            deleteCommentElement = (<img onClick={(e) => deleteFunction(e)} alt='delete comment' className='delete-comment-icon' src={cross}/>)
         }
     }
 
@@ -57,7 +60,7 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level}) => {
             <div className='comment-content'>
                 {content}
             </div>
-            <Comments CommentId={id} level={level}/>
+            <Comments CommentId={id} level={level} change={change}/>
             <div className='reply' onClick={(e) => handleClick(e)}>
                 {formElement}
                 <button className='reply-button'>Reply</button>  
@@ -81,6 +84,7 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level}) => {
             createComment(content,PostId,id).then((data) => {
                 //window.location.reload()
                 console.log(data)
+                refresh()
             });
         }
     }
@@ -90,11 +94,5 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level}) => {
             e.target.parentNode.firstChild.style.display = 'flex'
             e.target.style.display = 'none'
         }
-    }
-
-    function handleDeleteComment(e){
-        deleteComment(e.target.parentNode.parentNode.parentNode.id).then((data) =>{
-            console.log(data)
-        })
     }
 }   
