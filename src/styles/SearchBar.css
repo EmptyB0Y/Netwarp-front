@@ -1,7 +1,43 @@
+#searchbar{
+    display: flex;
+    flex-direction: column;
+}
+.search-input{
+    font-size: 20px;
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 20px;
+    max-height: 20px;
+
+}
+#search-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#search-list{
+    list-style: none;
+    background-color: aliceblue;
+}
+.search-result{
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    text-overflow: ellipsis;
+    width: 480px;
+    border: black solid 1px;
+    border-radius: 3px;
+    max-height: 100px;
+}
+.search-result-link{
+    text-decoration: none;
+    color: black;
+}
 .result-username {
-    font-size: 11px;
+    font-size: 20px;
 }
 
 .result-description {
-    font-size: 9px;
+
+    font-size: 15px;
 }
