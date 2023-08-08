@@ -4,3 +4,10 @@
     height: 150px;
     background-color: rgb(82, 80, 94);
 }
+
+#footer-content{
+    list-style: none;
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+}

@@ -9,6 +9,7 @@ export const Banner = () => {
     const navigate = useNavigate();
 
     if(sessionStorage.getItem('token')){
+
         return (
             <div id='banner-root-container' >
                 <div id='banner'>
@@ -21,7 +22,7 @@ export const Banner = () => {
                         <img id='menu-icon' alt='menu' src={menu}/>
                         <div id='menu'>
                             <button id='signout-button' onClick={handleClick}>SIGN OUT</button>
-                            <Link to='/profile'> PROFILE </Link>
+                            <Link to={'/profile/' + sessionStorage.getItem('profileId')}> PROFILE </Link>
                         </div>
                     </button>
                     <button id='notifications-button'>

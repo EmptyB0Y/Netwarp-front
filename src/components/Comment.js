@@ -58,7 +58,7 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level, delet
             </div>
 
             <div className='comment-content'>
-                {content}
+                {formatContent(content)}
             </div>
             <Comments CommentId={id} level={level} change={change}/>
             <div className='reply' onClick={(e) => handleClick(e)}>
@@ -82,7 +82,7 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level, delet
 
         if(id){
             createComment(content,PostId,id).then((data) => {
-                //window.location.reload()
+                document.getElementById('comment-input').value = ""
                 console.log(data)
                 refresh()
             });
@@ -94,5 +94,33 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level, delet
             e.target.parentNode.firstChild.style.display = 'flex'
             e.target.style.display = 'none'
         }
+    }
+
+    function formatContent(text){
+        const tab = text.split(' ');
+        let content = [];
+
+        let string = '';
+        for(let i = 0; i < tab.length; i++){
+            if(tab[i].startsWith(':') && tab[i].endsWith(':')){
+                content.push((<p>{string}</p>));
+                string = '';
+                content.push((<img src={tab[i].substring(1,tab[i].length-1)}></img>));
+            }
+            else if(tab[i].split('.').length > 1){
+                content.push((<a href={tab[i]}>{tab[i]}</a>));
+            }
+            else{
+                string += ' '+tab[i];
+            }
+        }
+
+        if(string !== ''){
+            content.push((<p>{string}</p>));
+        }
+
+        return (<div>
+            {content.map((el)=>el)}
+        </div>);
     }
 }   

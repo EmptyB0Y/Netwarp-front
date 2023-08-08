@@ -1,55 +1,41 @@
-import { TextSearchProfiles } from "../services/profiles.service"
-import {Profile} from "./Profile"
-import ReactDOM from 'react-dom'
+import { textSearchProfiles } from "../services/profiles.service"
+import { Link } from "react-router-dom";
+import { useState } from 'react'
 
 export const Searchbar = () =>{
+    const [result,setResult] = useState(<ul id='search-list'></ul>);
 
     return (
     <div className="searchbar">
         <form id='search-form' onKeyUpCapture={(e)=>{handleKeyUp(e)}}>
                 <input id='search-input'></input>
                 <button id='search-button'>SEARCH</button>
-                <span id='search-results'></span>
-            </form>
+                <span id='search-results'>{result}</span>
+        </form>
     </div>
-        )
-
-    function handleClick(profileId){
-        ReactDOM.render(
-            <div>
-            </div>,
-              document.getElementById('root')
-        );
-        setTimeout(() => {
-        ReactDOM.render(
-            <div>
-                <Top />
-                <Profile id={profileId} />
-            </div>,
-              document.getElementById('root')
-        );
-        }, 100);
-    }
+    )
 
     function handleKeyUp(e){
         e.preventDefault();
+
         if(e.target.value !== ''){
-            TextSearchProfiles(e.target.value).then((profiles) =>{
-            ReactDOM.render(
-            <ul id='search-list'>
-                {profiles.map((profile) => 
-                <li key={profile.userId}>
-                    <a href='#' onClick={()=>{handleClick(profile.userId)}}>{profile.firstname} {profile.lastname}</a>
-                </li>)}
-            </ul>,
-            document.getElementById("search-results"));
+            textSearchProfiles(e.target.value).then((profiles) =>{
+
+                if(profiles != null){
+                     setResult(<ul id='search-list'>
+                        {profiles.map((profile) => 
+                        <li key={profile.UserId}>
+                            <Link to={'/profile/'+profile.id}> 
+                                <p className='result-username'>{profile.username}</p> 
+                                <p className='result-description'>{profile.description}</p>
+                            </Link>
+                        </li>)}
+                    </ul>)
+                }
             }); 
         }
         else{
-            ReactDOM.render(
-                <ul id='search-list'>
-                </ul>,
-                document.getElementById("search-results"));
+            setResult(<ul id='search-list'></ul>)
         }
     }
 }

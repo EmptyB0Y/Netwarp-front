@@ -28,3 +28,17 @@ export const getProfile = async (userId) => {
       .then((res) => {return res.data;})
       .catch((err) => err)
 }
+
+export const textSearchProfiles = async (query) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    const bodyParameters = {
+        query : query
+    };
+    
+    return axios.post(BASE_URL+"search", bodyParameters,options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}

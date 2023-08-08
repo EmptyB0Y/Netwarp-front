@@ -1,20 +1,35 @@
 import '../styles/Profile.css'
-//import arrow from '../assets/Icons/arrow-right.webp'
+import arrow from '../assets/Icons/arrow-right.webp'
 import { Navigate } from "react-router-dom"
+import { useParams } from "react-router";
+import { getProfile } from '../services/profiles.service'
+import { useState, useEffect } from 'react'
 
-
-export const Profile = ({username}) => {
+export const Profile = () => {
     //const navigate = useNavigate();
+    const [profile,setProfile] = useState(null);
+    let { id } = useParams();
 
-    if(sessionStorage.getItem('profileId') !== null){
+    useEffect(() => {
+        getProfile(id)
+        .then(data => {
+            setProfile(data)
+        })
+        .catch((err) => console.log(err))
+  }, [id])
+
+    if(profile !== null){
         return (
             <div id='profile-root-container'>
-                <p>username</p>
+                <img alt='Go back' onClick={() => window.history.back()} id='arrow-back' src={arrow}></img>
+                <p>{profile.username}</p>
             </div>
         )
     }
-    else{
-        return (<Navigate to='/login' />)
-    }
-    
+
+    return (            
+    <div id='profile-root-container'>
+        <p>...</p>
+    </div>
+    )
 }
