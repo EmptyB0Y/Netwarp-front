@@ -10,7 +10,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import {useNavigate} from "react-router-dom";
 import { deleteComment } from '../services/comments.service';
 
-export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction}) => {
+export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, createdAt}) => {
     const [profile,setProfile] = useState(null);
     const [change,setChange] = useState(false);
 
@@ -35,8 +35,8 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction})
     if(sessionStorage.getItem('token')){
             formElement = (            
                 <form className='form-element' onSubmit={(e) => handleSubmit(e)}>
-                    <TextareaAutosize className='comment-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
-                    <button type='submit'><img alt='submit' className='comment-submit-icon' src={arrow}/></button>
+                    <TextareaAutosize className='comment-post-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
+                    <button className='comment-submit-button' type='submit'><img alt='submit' className='comment-submit-icon' src={arrow}/></button>
                 </form>  
             )
 
@@ -52,6 +52,7 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction})
                     <div className='post-author'>
                         <img alt='profile' className='author-picture' src={profile.pictureUrl}/>
                         <p className='author-username' >{profile.username}</p>
+                        <p className='createdAt'>{createdAt.substring(0,10) + " " + createdAt.substring(11,16)}</p>
                     </div>
                     {deletePostElement}
                 </div>

@@ -51,7 +51,7 @@
 .post-content:hover{
     cursor: pointer;
 }
-.comment-input{
+.comment-post-input{
     max-width: 100%;
     min-width: 100%;
     min-height: 20px;
@@ -60,4 +60,9 @@
 .comment-submit-icon{
     height: 20px;
     width: 30px;
+}
+
+.createdAt{
+    margin-left: auto;
+    padding: 10px;
 }

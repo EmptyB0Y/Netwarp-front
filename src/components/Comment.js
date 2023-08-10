@@ -1,16 +1,19 @@
 import '../styles/Comment.css';
 import arrow from '../assets/Icons/arrow-right.webp'
 import cross from '../assets/Icons/cross.png'
+import checkmark from '../assets/Icons/check-mark.png'
+import checkmarkActive from '../assets/Icons/check-mark-active.png'
 import { getProfile } from '../services/profiles.service'
 import { useState, useEffect } from 'react'
 import { Comments } from './Comments'
-import { createComment } from '../services/comments.service';
+import { createComment, upvoteComment, getCommentById } from '../services/comments.service';
 import { Link } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize'
 
-export const Comment = ({ProfileId, PostId, CommentId, content, id, level, deleteFunction}) => {
+export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, createdAt, upvotes}) => {
     const [profile,setProfile] = useState(null);
     const [change,setChange] = useState(false);
+    const [upvotesArray,setUpvotesArray] = useState(JSON.parse(upvotes));
 
     useEffect(() => {
             getProfile(ProfileId)
@@ -23,6 +26,11 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level, delet
     const refresh = () => {
         setChange(!change);
     }
+    
+    let upvoted = {}
+
+    upvoted[true] = checkmark;
+    upvoted[false] = checkmarkActive;
 
     let formElement = (<Link to='/login' className='form-element-comment'>Log in to comment</Link>)
 
@@ -33,7 +41,7 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level, delet
         formElement = (            
         <form className='form-element-comment' onSubmit={(e) => handleSubmit(e)}>
             <TextareaAutosize className='comment-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
-            <button type='submit'><img alt='submit' className='comment-submit-icon' src={arrow}/></button>
+            <button className='comment-submit-button' type='submit'><img alt='submit' className='comment-submit-icon' src={arrow}/></button>
         </form>  
         )
 
@@ -48,23 +56,24 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level, delet
 
     if(profile !== null) {
         return (
-        <div className='comment-root-container' >
+        <div className='comment-root-container'>
             <div className='comment-top'>
                 <div className='comment-author'>
                     <img alt='profile' className='author-picture' src={profile.pictureUrl}/>
-                    <p className='author-username' >{profile.username}</p>        
+                    <p className='author-username' >{profile.username}</p>   
+                    <p className='createdAt'>{createdAt.substring(0,10) + " " + createdAt.substring(11,16)}</p>     
                 </div>
                 {deleteCommentElement}
             </div>
-
             <div className='comment-content'>
                 {formatContent(content)}
             </div>
-            <Comments CommentId={id} level={level} change={change}/>
             <div className='reply' onClick={(e) => handleClick(e)}>
                 {formElement}
                 <button className='reply-button'>Reply</button>  
+                <img alt='' className='upvote-icon' src={upvoted[upvotesArray.includes(parseInt(sessionStorage.getItem('profileId')))]} onClick={(e) => handleUpvote(e)}></img>
             </div>
+            <Comments CommentId={id} level={level} change={change}/>
         </div>
         )
     }
@@ -82,11 +91,23 @@ export const Comment = ({ProfileId, PostId, CommentId, content, id, level, delet
 
         if(id){
             createComment(content,PostId,id).then((data) => {
-                document.getElementById('comment-input').value = ""
+                if(document.getElementById('comment-input').value != ""){
+                    document.getElementById('comment-input').value = ""
+                }
                 console.log(data)
                 refresh()
             });
         }
+    }
+
+    function handleUpvote(e){
+        e.stopPropagation()
+        upvoteComment(e.target.parentNode.parentNode.parentNode.id).then((data) => {
+            getCommentById(e.target.parentNode.parentNode.parentNode.id).then((comment) =>{
+                console.log(comment);
+                setUpvotesArray(JSON.parse(comment.upvotes));
+            });
+        });
     }
 
     function handleClick(e){

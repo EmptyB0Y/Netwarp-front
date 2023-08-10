@@ -41,20 +41,39 @@
     padding: 10px;
 }
 .comment-input{
-    max-width: 100%;
-    min-width: 100%;
+    max-width: 400px;
+    min-width: 400px;
     min-height: 20px;
+}
+.comment-submit-button{
+    width: 50px;
 }
 .comment-submit-icon{
     height: 20px;
     width: 30px;
 }
-
+.reply{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .reply-button{
     background-color: cornflowerblue;
     border: none;
+    border-radius: 5px;
 }
 
 .reply-button:hover{
+    cursor: pointer;
+}
+
+.upvote-icon{
+    padding-bottom: 5px;
+    padding-right: 5px;
+    width: 25px;
+    height: 25px;
+}
+
+.upvote-icon:hover{
     cursor: pointer;
 }

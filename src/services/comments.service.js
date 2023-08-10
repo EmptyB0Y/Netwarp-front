@@ -2,6 +2,17 @@ import axios from "axios";
 
 const BASE_URL = "http://127.0.0.1:3000/comments/"
 
+export const getCommentById= async (commentId) => {
+
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+    
+    return axios.get(BASE_URL+commentId,options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}
+
 export const getCommentsByPost = async (PostId) => {
 
     const options = {
@@ -37,11 +48,24 @@ export const createComment = async (content, postId, commentId=null) => {
 
     const bodyParameters = {
         content : content,
-         postId : postId,
-         commentId : commentId
+        postId : postId,
+        commentId : commentId
         };
 
     return axios.post(BASE_URL, bodyParameters,options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}
+
+export const upvoteComment = async (commentId) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    const bodyParameters = {
+    }
+
+    return axios.post(BASE_URL+commentId+"/upvote",bodyParameters, options)
       .then((res) => {return res.data;})
       .catch((err) => err)
 }

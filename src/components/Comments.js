@@ -5,9 +5,8 @@ import { Comment } from './Comment'
 export const Comments = ({PostId=null, CommentId=null, level=0, change=false, deleteFunction}) => {
     const [comments,setComments] = useState([]);
     const [done, setDone] = useState(false);
-
+    
     useEffect(() => {
-
             if(CommentId){
                 getCommentsByComment(CommentId)
                 .then(data => {
@@ -38,15 +37,15 @@ export const Comments = ({PostId=null, CommentId=null, level=0, change=false, de
             <div className='comments'>
                 {comments.map(comment =>
                     <div style={{marginLeft: level*30+'px'}} className='comment' id={comment.id} key={comment.id}>
-                        <Comment ProfileId={comment.ProfileId} PostId={comment.PostId} CommentId={comment.CommentId} content={comment.content} id={comment.id} level={levelDone} deleteFunction={deleteFunction}/>
+                        <Comment ProfileId={comment.ProfileId} PostId={comment.PostId} CommentId={comment.CommentId} content={comment.content} id={comment.id} level={levelDone} deleteFunction={deleteFunction} createdAt={comment.createdAt} upvotes={comment.upvotes}/>
                     </div>
                 )}
             </div>
         )
       }
 
-      return (
-      <div className='comments'>
-      </div>
-      )
+    return (
+    <div className='comments'>
+    </div>
+    )
 }

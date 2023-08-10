@@ -22,7 +22,7 @@ export const FocusPost = () => {
         return (
             <div id='focus-post-root-container'>    
                 <img alt='Go back' onClick={() => window.history.back()} id='arrow-back' src={arrow}></img>
-                <Post ProfileId={post.ProfileId} MissionId={post.MissionId} content={post.content} topic={post.topic} id={post.id} />
+                <Post ProfileId={post.ProfileId} MissionId={post.MissionId} content={post.content} topic={post.topic} id={post.id} createdAt={post.createdAt} />
             </div>
         )
     }

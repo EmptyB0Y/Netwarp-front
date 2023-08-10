@@ -49,7 +49,7 @@ export const Home = () => {
 
         postsElement = (posts.map(post => 
         <div className='post' id={post.id} key={post.id}>
-            <Post ProfileId={post.ProfileId} MissionId={post.MissionId} content={post.content} topic={post.topic} id={post.id} deleteFunction={handleDeletePost}/> 
+            <Post ProfileId={post.ProfileId} MissionId={post.MissionId} content={post.content} topic={post.topic} id={post.id} deleteFunction={handleDeletePost} createdAt={post.createdAt}/> 
         </div>))
 
         if(posts === []){
