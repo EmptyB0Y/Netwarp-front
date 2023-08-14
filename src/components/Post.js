@@ -1,6 +1,7 @@
 import '../styles/Post.css';
 import arrow from '../assets/Icons/arrow-right.webp'
 import cross from '../assets/Icons/cross.png'
+import plus from '../assets/Icons/plus.png'
 import { useState, useEffect } from 'react'
 import { getProfile } from '../services/profiles.service'
 import { Comments } from './Comments'
@@ -9,6 +10,7 @@ import { Link } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize'
 import {useNavigate} from "react-router-dom";
 import { deleteComment } from '../services/comments.service';
+import { GifSearch } from './GifSearch';
 
 export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, createdAt}) => {
     const [profile,setProfile] = useState(null);
@@ -35,9 +37,13 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
     if(sessionStorage.getItem('token')){
             formElement = (            
                 <form className='form-element' onSubmit={(e) => handleSubmit(e)}>
-                    <TextareaAutosize className='comment-post-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
+                    <TextareaAutosize id={'comment-post-input-'+id} className='comment-post-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
                     <button className='comment-submit-button' type='submit'><img alt='submit' className='comment-submit-icon' src={arrow}/></button>
-                </form>  
+                    <div className='gif-search' id={'post-gif-search-'+id} style={{display: 'none'}}>
+                        <GifSearch place={'comment-post-input-'+id}/>
+                    </div>
+                    <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>
+                </form>
             )
 
         if(ProfileId == sessionStorage.getItem('profileId')){
@@ -61,7 +67,7 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
                     <p>#{topic}</p>
                 </div>
                 <div className='post-content' onClick={handleClick}>
-                    {content}
+                    {formatContent(content)}
                 </div>
                 <div className='comments-frame'>
                     <Comments PostId={id} change={change} deleteFunction={handleDeleteComment}/>
@@ -81,7 +87,9 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
         e.stopPropagation()
 
         const content = e.target['content'].value;
+        document.getElementById('post-gif-search-'+id).style.display = 'none'
 
+        e.target['content'].value = '';
         if(id){
             createComment(content,id).then(() => {
                 refresh()
@@ -99,6 +107,45 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
             console.log(data)
             refresh()
         })
+    }
+
+    function formatContent(text){
+        const tab = text.split(' ');
+        let content = [];
+
+        let string = '';
+        for(let i = 0; i < tab.length; i++){
+            if(tab[i].startsWith(':') && tab[i].endsWith(':')){
+                content.push((<p>{string}</p>));
+                string = '';
+                content.push((<img src={tab[i].substring(1,tab[i].length-1)}></img>));
+            }
+            else if(tab[i].split('.').length > 1){
+                content.push((<a href={tab[i]}>{tab[i]}</a>));
+            }
+            else{
+                string += ' '+tab[i];
+            }
+        }
+
+        if(string !== ''){
+            content.push((<p>{string}</p>));
+        }
+
+        return (<div>
+            {content.map((el)=>el)}
+        </div>);
+    }
+
+    function handleClickGifSearch(e){
+
+        if(document.getElementById('post-gif-search-'+id).style.display == 'none'){
+            document.getElementById('post-gif-search-'+id).style.display = 'block'
+        }
+        else{
+            document.getElementById('post-gif-search-'+id).style.display = 'none'
+        }
+
     }
 
 }

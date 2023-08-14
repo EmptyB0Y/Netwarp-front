@@ -1,33 +1,19 @@
 import '../styles/Home.css'
 import arrow from '../assets/Icons/arrow-right.webp'
-//import { useNavigate } from "react-router-dom";
+import plus from '../assets/Icons/plus.png'
 import { Post } from './Post'
 import { Searchbar } from './Searchbar'
-//import { getPosts } from '../services/mockdata'
 import { useState, useEffect } from 'react'
 import { getPosts, createPost, deletePost } from '../services/posts.service'
-//import { getProfile } from '../services/profiles.service'
 import TextareaAutosize from 'react-textarea-autosize'
+import { GifSearch } from './GifSearch'
 
 export const Home = () => {
 
-    //const [profile,setProfile] = useState(null);
     const [posts, setPosts] = useState([]);
     const [load,setLoad] = useState(false);
     const [change,setChange] = useState(false);
     const [topic,setTopic] = useState('general');
-
-    // useEffect(() => {
-    //     if(sessionStorage.getItem('profileId')){
-    //         getProfile(sessionStorage.getItem('profileId'))
-    //         .then(data => {
-    //             setProfile(data)
-    //             console.log(data);
-    //             //refresh()
-    //         })
-    //         .catch((err) => console.log(err))
-    //     }
-    //   }, [change])
 
     useEffect(() => {
         getPosts(topic)
@@ -48,7 +34,7 @@ export const Home = () => {
     if(load){
 
         postsElement = (posts.map(post => 
-        <div className='post' id={post.id} key={post.id}>
+        <div className='post' id={'post-'+post.id} key={'post-'+post.id}>
             <Post ProfileId={post.ProfileId} MissionId={post.MissionId} content={post.content} topic={post.topic} id={post.id} deleteFunction={handleDeletePost} createdAt={post.createdAt}/> 
         </div>))
 
@@ -59,12 +45,20 @@ export const Home = () => {
 
     if(sessionStorage.getItem('token')) {
         return (
-            <div id='home-root-container'>
+            <div id='home-root-container'>  
                     <Searchbar />
+                    <form id='topic-form' onSubmit={(e) => handleTopicChange(e)}>
+                        <input id='topic-input' name='content'/>
+                        <button id='topic-submit' type='submit'><img alt='submit' id='topic-submit-icon' src={arrow}/></button>
+                    </form>
+                    <p id='topic'>#{topic}</p>
                     <form id='add-post-form' onSubmit={(e) => handleSubmit(e)}>
                         <TextareaAutosize id='post-input' role='textbox' placeholder="Something to say ?" name="content" rows="4"/>
                         <button id='post-submit' type='submit'><img alt='submit' id='post-submit-icon' src={arrow}/></button>
-                    </form>
+                        <div className='gif-search' id='gif-search' style={{display: 'none'}}>
+                            <GifSearch place={'post-input'}/>
+                        </div>
+                        <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>                    </form>
 
                 <div id='posts'>
                     {postsElement}
@@ -82,12 +76,22 @@ export const Home = () => {
         </div>
     )
 
-    function handleSubmit(event){
-        event.preventDefault()
-        event.stopPropagation()
+    function handleTopicChange(e){
+        e.preventDefault()
+        e.stopPropagation()
+        let t = e.target['content'].value;
+        if(t == ''){
+            t = 'general';
+        }
+        setTopic(t)
+    }
 
-        if(event.target['content'].value !== ""){
-            createPost(event.target['content'].value,topic).then( () => {
+    function handleSubmit(e){
+        e.preventDefault()
+        e.stopPropagation()
+
+        if(e.target['content'].value !== ""){
+            createPost(e.target['content'].value,topic).then( () => {
                 refresh()
                 document.getElementById('post-input').value = ""
             })
@@ -96,10 +100,21 @@ export const Home = () => {
     }
 
     function handleDeletePost(e){
-        console.log(e.target.parentNode.parentNode.parentNode.id)
-        deletePost(e.target.parentNode.parentNode.parentNode.id).then((data) =>{
+        console.log((e.target.parentNode.parentNode.parentNode.id.substring(5)))
+        deletePost(e.target.parentNode.parentNode.parentNode.id.substring(5)).then((data) =>{
             console.log(data)
             refresh()
         })
+    }
+
+    function handleClickGifSearch(e){
+
+        if(document.getElementById('gif-search').style.display == 'none'){
+            document.getElementById('gif-search').style.display = 'block'
+        }
+        else{
+            document.getElementById('gif-search').style.display = 'none'
+        }
+
     }
 }

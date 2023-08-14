@@ -83,3 +83,21 @@ body{
     height: 20px;
     width: 30px;
 }
+
+#topic-form{
+    display: flex;
+    flex-direction: row;
+}
+#topic-input{
+    height: 20px;
+}
+#topic-submit{
+    height: 24px;
+}
+#topic-submit-icon{
+    width: 20px;
+    height: 20px;
+}
+#topic{
+    font-weight: bold;
+}

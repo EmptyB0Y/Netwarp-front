@@ -29,6 +29,7 @@ export const Profile = () => {
 
     return (            
     <div id='profile-root-container'>
+        <img alt='Go back' onClick={() => window.history.back()} id='arrow-back' src={arrow}></img>
         <p>...</p>
     </div>
     )

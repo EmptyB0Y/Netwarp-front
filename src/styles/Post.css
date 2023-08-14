@@ -66,3 +66,16 @@
     margin-left: auto;
     padding: 10px;
 }
+
+.gifs-anchor{
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+}
+
+.gifs-anchor:hover{
+    cursor: pointer;
+}

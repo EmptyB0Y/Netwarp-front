@@ -1,5 +1,6 @@
 import '../styles/Comment.css';
 import arrow from '../assets/Icons/arrow-right.webp'
+import plus from '../assets/Icons/plus.png'
 import cross from '../assets/Icons/cross.png'
 import checkmark from '../assets/Icons/check-mark.png'
 import checkmarkActive from '../assets/Icons/check-mark-active.png'
@@ -9,6 +10,7 @@ import { Comments } from './Comments'
 import { createComment, upvoteComment, getCommentById } from '../services/comments.service';
 import { Link } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize'
+import { GifSearch } from './GifSearch';
 
 export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, createdAt, upvotes}) => {
     const [profile,setProfile] = useState(null);
@@ -29,8 +31,8 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
     
     let upvoted = {}
 
-    upvoted[true] = checkmark;
-    upvoted[false] = checkmarkActive;
+    upvoted[false] = checkmark;
+    upvoted[true] = checkmarkActive;
 
     let formElement = (<Link to='/login' className='form-element-comment'>Log in to comment</Link>)
 
@@ -40,8 +42,12 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
 
         formElement = (            
         <form className='form-element-comment' onSubmit={(e) => handleSubmit(e)}>
-            <TextareaAutosize className='comment-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
+            <TextareaAutosize id={'comment-input-'+id} className='comment-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
             <button className='comment-submit-button' type='submit'><img alt='submit' className='comment-submit-icon' src={arrow}/></button>
+            <div className='gif-search' id={'gif-search-'+id} style={{display: 'none'}}>
+                <GifSearch place={'comment-input-'+id}/>
+            </div>
+            <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>
         </form>  
         )
 
@@ -88,12 +94,12 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
         e.stopPropagation()
         
         const content = e.target['content'].value;
+        document.getElementById('gif-search-'+id).style.display = 'none'
+
+        e.target['content'].value = '';
 
         if(id){
             createComment(content,PostId,id).then((data) => {
-                if(document.getElementById('comment-input').value != ""){
-                    document.getElementById('comment-input').value = ""
-                }
                 console.log(data)
                 refresh()
             });
@@ -143,5 +149,16 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
         return (<div>
             {content.map((el)=>el)}
         </div>);
+    }
+
+    function handleClickGifSearch(e){
+
+        if(document.getElementById('gif-search-'+id).style.display == 'none'){
+            document.getElementById('gif-search-'+id).style.display = 'block'
+        }
+        else{
+            document.getElementById('gif-search-'+id).style.display = 'none'
+        }
+
     }
 }   
