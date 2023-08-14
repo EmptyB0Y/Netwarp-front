@@ -10,7 +10,7 @@ export const Signup = () => {
     const navigate = useNavigate();
 
     if(sessionStorage.getItem('token')){
-        return (<Navigate to='/home' />)
+        return (<Navigate to='/home/general' />)
     }
 
     return (

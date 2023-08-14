@@ -40,7 +40,7 @@ export const Banner = () => {
         return (
             <div id='banner-root-container' >
                 <div id='banner'>
-                    <Link to='/home'>
+                    <Link to='/home/general'>
                     <img id='logo' alt='logo' src={logo}></img>
                     </Link>
                 </div>

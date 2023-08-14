@@ -66,8 +66,8 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
             <div className='comment-top'>
                 <div className='comment-author'>
                     <img alt='profile' className='author-picture' src={profile.pictureUrl}/>
-                    <p className='author-username' >{profile.username}</p>   
-                    <p className='createdAt'>{createdAt.substring(0,10) + " " + createdAt.substring(11,16)}</p>     
+                    <Link className='profile-username-link' to={'/profile/' + profile.id}> {profile.username} </Link>
+                    <p className='createdAt'>{createdAt.substring(0,10) + " " + createdAt.substring(11,16)}</p>    
                 </div>
                 {deleteCommentElement}
             </div>
@@ -77,7 +77,7 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
             <div className='reply' onClick={(e) => handleClick(e)}>
                 {formElement}
                 <button className='reply-button'>Reply</button>  
-                <img alt='' className='upvote-icon' src={upvoted[upvotesArray.includes(parseInt(sessionStorage.getItem('profileId')))]} onClick={(e) => handleUpvote(e)}></img>
+                <img alt='Upvote' className='upvote-icon' src={upvoted[upvotesArray.includes(parseInt(sessionStorage.getItem('profileId')))]} onClick={(e) => handleUpvote(e)}></img>
             </div>
             <Comments CommentId={id} level={level} change={change}/>
         </div>

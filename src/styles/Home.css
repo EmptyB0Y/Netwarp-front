@@ -101,3 +101,12 @@ body{
 #topic{
     font-weight: bold;
 }
+
+#topics{
+    font-weight: bold;;
+    text-decoration: none;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+}

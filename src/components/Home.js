@@ -7,13 +7,17 @@ import { useState, useEffect } from 'react'
 import { getPosts, createPost, deletePost } from '../services/posts.service'
 import TextareaAutosize from 'react-textarea-autosize'
 import { GifSearch } from './GifSearch'
+import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 
 export const Home = () => {
-
+    let { topicDefault } = useParams();
+    console.log(topicDefault);
+    
     const [posts, setPosts] = useState([]);
     const [load,setLoad] = useState(false);
     const [change,setChange] = useState(false);
-    const [topic,setTopic] = useState('general');
+    const [topic,setTopic] = useState(topicDefault);
 
     useEffect(() => {
         getPosts(topic)
@@ -46,6 +50,7 @@ export const Home = () => {
     if(sessionStorage.getItem('token')) {
         return (
             <div id='home-root-container'>  
+                    <Link id='topics' to='/topics'>Topics</Link>
                     <Searchbar />
                     <form id='topic-form' onSubmit={(e) => handleTopicChange(e)}>
                         <input id='topic-input' name='content'/>
@@ -69,6 +74,7 @@ export const Home = () => {
 
     return (
         <div id='home-root-container'>
+            <Link id='topics' to='/topics'>Topics</Link>
             <Searchbar />
             <div id='posts'>
                 {postsElement}

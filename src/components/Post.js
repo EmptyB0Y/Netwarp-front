@@ -57,7 +57,7 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
                 <div className='post-top'>
                     <div className='post-author'>
                         <img alt='profile' className='author-picture' src={profile.pictureUrl}/>
-                        <p className='author-username' >{profile.username}</p>
+                        <Link className='profile-username-link' to={'/profile/' + profile.id}> {profile.username} </Link>
                         <p className='createdAt'>{createdAt.substring(0,10) + " " + createdAt.substring(11,16)}</p>
                     </div>
                     {deletePostElement}

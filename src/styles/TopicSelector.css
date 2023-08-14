@@ -1,0 +1,15 @@
+#topic-selector-root-container{
+    position: relative;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5%;
+    min-width: 500px;
+    min-height: 700px;
+}
+
+#topic-list{
+    display: flex;
+    flex-direction: column;
+}

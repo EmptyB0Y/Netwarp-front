@@ -50,3 +50,14 @@ export const deletePost = async (id) => {
       .then((res) => {return res.data;})
       .catch((err) => err)
 }
+
+export const getTopics = async () => {
+  
+    const options = {
+      headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+  };
+  
+  return axios.get(BASE_URL + 'topics',options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+  }
