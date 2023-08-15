@@ -21,7 +21,7 @@ function App() {
       <Routes>
           {mainComponent}
           <Route path="/login" element={ <Login />}></Route>
-          <Route path="/signup" element={ <Signup /> }></Route>
+          <Route path="/signup/:admin" element={ <Signup /> }></Route>
           <Route path="/home/:topicDefault" element={ <Home />}></Route>
           <Route path="/profile/:id" element={ <Profile /> }></Route>
           <Route path="/focus-post/:id" element={ <FocusPost /> }></Route>

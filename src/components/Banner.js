@@ -67,7 +67,7 @@ export const Banner = () => {
         <div id='banner'>
             <img id='logo' alt='logo' src={logo}></img>
             <div id='navbar'>
-                <Link to={'/signup'} className="nav-link"> SIGN UP </Link>
+                <Link to={'/signup/0'} className="nav-link"> SIGN UP </Link>
                 <Link to={'/login'} className="nav-link"> LOG IN </Link>
                 <Link to={'/home'} className="nav-link"> HOME </Link>
             </div>

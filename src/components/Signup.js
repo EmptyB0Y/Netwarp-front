@@ -4,13 +4,25 @@ import logo from '../assets/Logos/Net-Warp_logo.png'
 import {loginUser, signupUser} from '../services/credentials.service'
 import { createProfile } from '../services/profiles.service'
 import { Link, useNavigate, Navigate } from "react-router-dom";
+import { useParams } from "react-router";
 
 export const Signup = () => {
+    let { admin } = useParams();
 
     const navigate = useNavigate();
 
     if(sessionStorage.getItem('token')){
         return (<Navigate to='/home/general' />)
+    }
+
+    let superPasswordElement = (<div></div>);
+    if(admin == 1){
+        superPasswordElement = (     
+        <div>                    
+            <p>Super-password :</p>
+            <input name='superpassword-input' type='password' />
+        </div>
+        )
     }
 
     return (
@@ -24,6 +36,7 @@ export const Signup = () => {
                                     <p>E-mail address :</p>
                                     <input name='email-input'/>
                                     <p className='form-error' id='email-error'>Invalid format !</p>
+                                    {superPasswordElement}
                                     <p>Password :</p>
                                     <input name='password-input' type='password' />
                                     <p className='form-error' id='password-error'>Password must be 8 characters long and contain at least: 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character</p>
@@ -55,6 +68,10 @@ export const Signup = () => {
         e.preventDefault()
         e.stopPropagation()
     
+        let superpassword = null;
+        if(e.target['superpassword-input']){
+            superpassword = e.target['superpassword-input'].value;
+        }
         const email = e.target['email-input'].value;
         const password = e.target['password-input'].value;
         const confirmPassword = e.target['confirm-password-input'].value;
@@ -100,7 +117,7 @@ export const Signup = () => {
         }
     
         if(pass) {
-            signupUser(email,password).then((data) => {
+            signupUser(email,password,superpassword).then((data) => {
                 console.log(data.name)
                 if(data.name === 'Error'){
                     document.getElementById("signup-error").style.display = "block";
@@ -112,7 +129,7 @@ export const Signup = () => {
                             sessionStorage.setItem("token",data.token);
 
                             createProfile(username).then( () => {
-                                navigate('/home');   
+                                navigate('/home/general');   
                                 window.location.reload();         
                             })
                         }
