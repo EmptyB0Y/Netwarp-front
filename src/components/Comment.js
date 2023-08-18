@@ -55,7 +55,7 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
             formElement = (<div></div>)
         }
 
-        if(ProfileId == sessionStorage.getItem('profileId')){
+        if(ProfileId == sessionStorage.getItem('profileId') || sessionStorage.getItem('access') == 'admin'){
             deleteCommentElement = (<img onClick={(e) => deleteFunction(e)} alt='delete comment' className='delete-comment-icon' src={cross}/>)
         }
     }

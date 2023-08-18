@@ -46,7 +46,7 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
                 </form>
             )
 
-        if(ProfileId == sessionStorage.getItem('profileId')){
+        if(ProfileId == sessionStorage.getItem('profileId') || sessionStorage.getItem('access') == 'admin'){
             deletePostElement = (<img onClick={(e) => deleteFunction(e)} alt='delete post' className='delete-post-icon' src={cross}/>)
         }
     }
@@ -82,6 +82,7 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
             <p>...</p>
         </div>
     )
+    
     function handleSubmit(e) {
         e.preventDefault()
         e.stopPropagation()

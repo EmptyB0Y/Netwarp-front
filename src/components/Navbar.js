@@ -1,4 +1,4 @@
-import '../styles/Banner.css'
+import '../styles/Navbar.css'
 import logo from '../assets/Logos/Net-Warp_logo2.png'
 import menu from '../assets/Icons/menu.png'
 import bell from '../assets/Icons/bell.png'
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getProfile } from '../services/profiles.service'
 import { useState, useEffect } from 'react'
 
-export const Banner = () => {
+export const Navbar = () => {
     const navigate = useNavigate();
 
     const [profile,setProfile] = useState(null);
@@ -38,8 +38,8 @@ export const Banner = () => {
                 )
         }
         return (
-            <div id='banner-root-container' >
-                <div id='banner'>
+            <div id='navbar-root-container' >
+                <div id='navbar'>
                     <Link to='/home/general'>
                     <img id='logo' alt='logo' src={logo}></img>
                     </Link>
@@ -63,8 +63,8 @@ export const Banner = () => {
     }
 
     return (
-    <div id='banner-root-container' >
-        <div id='banner'>
+    <div id='navbar-root-container' >
+        <div id='navbar'>
             <img id='logo' alt='logo' src={logo}></img>
             <div id='navbar'>
                 <Link to={'/signup/0'} className="nav-link"> SIGN UP </Link>

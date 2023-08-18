@@ -51,7 +51,8 @@ export const Login = () => {
                 if(data.token){
                     sessionStorage.setItem("profileId",data.profileId);
                     sessionStorage.setItem("token",data.token);
-                    navigate('/home');   
+                    sessionStorage.setItem("access",data.access);
+                    navigate('/home/general');   
                     window.location.reload();         
                 }
                 else{

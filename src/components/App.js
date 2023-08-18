@@ -1,7 +1,7 @@
 import {Login} from './Login'
 import {Home} from './Home'
 import { Signup } from './Signup'
-import { Banner } from './Banner'
+import { Navbar } from './Navbar'
 import { Profile } from './Profile'
 import { TopicSelector } from './TopicSelector'
 import { FocusPost } from './FocusPost'
@@ -17,7 +17,7 @@ function App() {
   return(
   <div>
   <Router>
-      <Banner />
+      <Navbar />
       <Routes>
           {mainComponent}
           <Route path="/login" element={ <Login />}></Route>

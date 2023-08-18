@@ -1,9 +1,9 @@
-#banner-root-container{
+#navbar-root-container{
     position: fixed;
     width: 100%;
     z-index: 1;
 }
-#banner{
+#navbar{
     background-image: linear-gradient(to bottom, #ffffff 0%, hsl(275, 19%, 35%) 100%);
     display: flex;
     flex-direction: row;
@@ -37,7 +37,7 @@
     width: 155px;
     height: 55px;
 }
-#banner-title{
+#navbar-title{
     margin-left: 20px;
     align-self: center;
 }
