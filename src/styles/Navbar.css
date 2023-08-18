@@ -13,7 +13,7 @@
     min-width: 500px;
     height: 50px;
 }
-#navbar{
+#navbar-items{
     width: 40%;
     display: flex;
     flex-direction: row;

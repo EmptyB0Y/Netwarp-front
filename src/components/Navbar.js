@@ -66,10 +66,10 @@ export const Navbar = () => {
     <div id='navbar-root-container' >
         <div id='navbar'>
             <img id='logo' alt='logo' src={logo}></img>
-            <div id='navbar'>
+            <div id='navbar-items'>
                 <Link to={'/signup/0'} className="nav-link"> SIGN UP </Link>
                 <Link to={'/login'} className="nav-link"> LOG IN </Link>
-                <Link to={'/home'} className="nav-link"> HOME </Link>
+                <Link to={'/home/general'} className="nav-link"> HOME </Link>
             </div>
         </div>
 

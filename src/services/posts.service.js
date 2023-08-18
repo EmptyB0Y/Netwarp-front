@@ -8,8 +8,11 @@ export const getPosts = async (topic) => {
         headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
     };
 
-    
-    return axios.get(BASE_URL+"topic/"+topic,options)
+    let url = BASE_URL
+    if(topic != 'general'){
+        url = BASE_URL+"topic/"+topic
+    }
+    return axios.get(url,options)
       .then((res) => {return res.data;})
       .catch((err) => err)
 }
