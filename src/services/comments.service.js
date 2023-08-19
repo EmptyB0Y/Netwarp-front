@@ -38,10 +38,7 @@ export const getCommentsByComment = async (CommentId) => {
 }
 
 export const createComment = async (content, postId, commentId=null) => {
-    if(content === null || content === ""){
-        alert("You can't send a blank comment")
-        return
-    }
+
     const options = {
         headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
     };
@@ -79,4 +76,27 @@ export const deleteComment = async (commentId) => {
     return axios.delete(BASE_URL+commentId,options)
       .then((res) => {return res.data;})
       .catch((err) => err)
+}
+
+export const getPhotos = async (id) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    return axios.get(BASE_URL + id +'/photos',options)
+        .then((res) => {return res.data;})
+        .catch((err) => err)
+}
+
+export const uploadPhoto = async (id,file) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    let fm = new FormData();
+    fm.append('image', file);
+
+    return axios.post(BASE_URL + id +'/upload-photo',fm,options)
+        .then((res) => {return res.data;})
+        .catch((err) => err)
 }

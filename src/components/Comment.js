@@ -11,11 +11,17 @@ import { createComment, upvoteComment, getCommentById } from '../services/commen
 import { Link } from "react-router-dom";
 import TextareaAutosize from 'react-textarea-autosize'
 import { GifSearch } from './GifSearch';
+import { uploadPhoto } from '../services/comments.service';
+import { getPhotos } from '../services/comments.service';
+import { deleteComment } from '../services/comments.service';
 
 export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, createdAt, upvotes}) => {
     const [profile,setProfile] = useState(null);
     const [change,setChange] = useState(false);
     const [upvotesArray,setUpvotesArray] = useState(JSON.parse(upvotes));
+    const [image,setImage] = useState(null);
+    const [images,setImages] = useState([]);
+    const [load, setLoad] = useState(false);
 
     useEffect(() => {
             getProfile(ProfileId)
@@ -25,6 +31,15 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
             .catch((err) => console.log(err))
       }, [change, ProfileId])
       
+      useEffect(() => {
+        getPhotos(id)
+        .then(data => {
+            setImages(data)
+            setLoad(true)
+            })
+        .catch((err) => console.log(err))
+    }, [change])
+
     const refresh = () => {
         setChange(!change);
     }
@@ -47,7 +62,10 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
             <div className='gif-search' id={'gif-search-'+id} style={{display: 'none'}}>
                 <GifSearch place={'comment-input-'+id}/>
             </div>
-            <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>
+            <div className='media'>
+                <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>
+                <input type='file' id='upload' onInput={(e) => handleInputImage(e)} width='20' height='20' multiple/>
+            </div>
         </form>  
         )
 
@@ -79,7 +97,7 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
                 <button className='reply-button'>Reply</button>  
                 <img alt='Upvote' className='upvote-icon' src={upvoted[upvotesArray.includes(parseInt(sessionStorage.getItem('profileId')))]} onClick={(e) => handleUpvote(e)}></img>
             </div>
-            <Comments CommentId={id} level={level} change={change}/>
+            <Comments CommentId={id} level={level} change={change} deleteFunction={handleDeleteComment}/>
         </div>
         )
     }
@@ -89,6 +107,7 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
             <p>...</p>
         </div>
     )
+    
     function handleSubmit(e) {
         e.preventDefault()
         e.stopPropagation()
@@ -96,14 +115,32 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
         const content = e.target['content'].value;
         document.getElementById('gif-search-'+id).style.display = 'none'
 
+        if((content === null || content === "") && image === null) {
+            alert("You can't send a blank comment")
+            return
+        }
+
         e.target['content'].value = '';
 
         if(id){
-            createComment(content,PostId,id).then((data) => {
-                console.log(data)
+            createComment(content,PostId,id).then((comment) => {             
+                if(image != null){
+                    console.log("image submitted");
+                    uploadPhoto(comment.id,image).then(() => {
+                        console.log("Image uploaded successfully");
+                    });
+                }
                 refresh()
             });
         }
+    }
+
+    function handleDeleteComment(e){
+        console.log(e.target.parentNode.parentNode.parentNode.id)
+        deleteComment(e.target.parentNode.parentNode.parentNode.id).then((data) =>{
+            console.log(data)
+            refresh()
+        })
     }
 
     function handleUpvote(e){
@@ -124,6 +161,13 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
     }
 
     function formatContent(text){
+        if(load){
+            for (var i = 0; i < images.length; i++){
+                text += ' :'+ images[i].url +':'
+            }
+            console.log('content :')
+            console.log(text)
+        }
         const tab = text.split(' ');
         let content = [];
 
@@ -161,4 +205,19 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
         }
 
     }
+    
+    function handleInputImage(e){
+        const file = Array.from(e.target.files);
+
+        if(file.length > 0){
+            if(file[0].name.endsWith(".jpg") || file[0].name.endsWith(".jpeg") || file[0].name.endsWith(".PNG")){
+            console.log("ok");
+            setImage(file[0]);
+            }
+            else{
+                alert("Invalid file format !");
+                e.target.files = []
+            }
+        }
+      }
 }   

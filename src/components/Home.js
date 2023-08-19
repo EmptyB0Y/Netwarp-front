@@ -9,6 +9,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { GifSearch } from './GifSearch'
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
+import { uploadPhoto } from '../services/posts.service';
 
 export const Home = () => {
     let { topicDefault } = useParams();
@@ -18,6 +19,7 @@ export const Home = () => {
     const [load,setLoad] = useState(false);
     const [change,setChange] = useState(false);
     const [topic,setTopic] = useState(topicDefault);
+    const [image,setImage] = useState(null);
 
     useEffect(() => {
         getPosts(topic)
@@ -63,7 +65,11 @@ export const Home = () => {
                         <div className='gif-search' id='gif-search' style={{display: 'none'}}>
                             <GifSearch place={'post-input'}/>
                         </div>
-                        <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>                    </form>
+                        <div className='media'>
+                            <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>                    
+                            <input type='file' id='upload' onInput={(e) => handleInputImage(e)} width='20' height='20' multiple/>
+                        </div>
+                    </form>
 
                 <div id='posts'>
                     {postsElement}
@@ -96,10 +102,18 @@ export const Home = () => {
         e.preventDefault()
         e.stopPropagation()
 
-        if(e.target['content'].value !== ""){
-            createPost(e.target['content'].value,topic).then( () => {
+        if(e.target['content'].value !== "" || image != null){
+            
+            createPost(e.target['content'].value,topic).then( (post) => {
+                                
+                if(image != null){
+                    console.log("image submitted");
+                    uploadPhoto(post.id,image).then(() => {
+                        console.log("Image uploaded successfully");
+                    });
+                }
                 refresh()
-                document.getElementById('post-input').value = ""
+                e.target['content'].value = '';
             })
         }
 
@@ -123,4 +137,19 @@ export const Home = () => {
         }
 
     }
+
+    function handleInputImage(e){
+        const file = Array.from(e.target.files);
+
+        if(file.length > 0){
+            if(file[0].name.endsWith(".jpg") || file[0].name.endsWith(".jpeg") || file[0].name.endsWith(".PNG")){
+            console.log("ok");
+            setImage(file[0]);
+            }
+            else{
+                alert("Invalid file format !");
+                e.target.files = []
+            }
+        }
+      }
 }

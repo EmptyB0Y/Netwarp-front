@@ -77,3 +77,7 @@
 .upvote-icon:hover{
     cursor: pointer;
 }
+
+.comment-content img{
+    max-width: -webkit-fill-available;
+}

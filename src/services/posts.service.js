@@ -60,7 +60,30 @@ export const getTopics = async () => {
       headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
   };
   
-  return axios.get(BASE_URL + 'topics',options)
-      .then((res) => {return res.data;})
-      .catch((err) => err)
-  }
+    return axios.get(BASE_URL + 'topics',options)
+        .then((res) => {return res.data;})
+        .catch((err) => err)
+}
+
+export const getPhotos = async (id) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    return axios.get(BASE_URL + id +'/photos',options)
+        .then((res) => {return res.data;})
+        .catch((err) => err)
+}
+
+export const uploadPhoto = async (id,file) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    let fm = new FormData();
+    fm.append('image', file);
+
+    return axios.post(BASE_URL + id +'/upload-photo',fm,options)
+        .then((res) => {return res.data;})
+        .catch((err) => err)
+}

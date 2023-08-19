@@ -11,21 +11,35 @@ import TextareaAutosize from 'react-textarea-autosize'
 import {useNavigate} from "react-router-dom";
 import { deleteComment } from '../services/comments.service';
 import { GifSearch } from './GifSearch';
+import { uploadPhoto } from '../services/comments.service';
+import { getPhotos } from '../services/posts.service';
 
 export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, createdAt}) => {
     const [profile,setProfile] = useState(null);
     const [change,setChange] = useState(false);
+    const [image,setImage] = useState(null);
+    const [images,setImages] = useState([]);
+    const [load, setLoad] = useState(false);
 
     let navigate = useNavigate();
 
     useEffect(() => {
-            getProfile(ProfileId)
-            .then(data => {
-                setProfile(data)
-            })
-            .catch((err) => console.log(err))
-      }, [ProfileId, change])
+        getProfile(ProfileId)
+        .then(data => {
+            setProfile(data)
+        })
+        .catch((err) => console.log(err))
+    }, [ProfileId, change])
     
+    useEffect(() => {
+        getPhotos(id)
+        .then(data => {
+            setImages(data)
+            setLoad(true)
+            })
+        .catch((err) => console.log(err))
+    }, [change])
+
     const refresh = () => {
         setChange(!change);
     }
@@ -39,10 +53,14 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
                 <form className='form-element' onSubmit={(e) => handleSubmit(e)}>
                     <TextareaAutosize id={'comment-post-input-'+id} className='comment-post-input' role='textbox' placeholder="Leave a comment" name="content" rows="4"/>
                     <button className='comment-submit-button' type='submit'><img alt='submit' className='comment-submit-icon' src={arrow}/></button>
-                    <div className='gif-search' id={'post-gif-search-'+id} style={{display: 'none'}}>
-                        <GifSearch place={'comment-post-input-'+id}/>
+                        <div className='gif-search' id={'post-gif-search-'+id} style={{display: 'none'}}>
+                            <GifSearch place={'comment-post-input-'+id}/>
+                        </div>
+                    <div className='media' >
+                        <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>
+                        <input type='file' id='upload' onInput={(e) => handleInputImage(e)} width='20' height='20' multiple/>
                     </div>
-                    <img alt='Gifs' className='gifs-anchor' src={plus} onClick={(e) => handleClickGifSearch(e)}></img>
+
                 </form>
             )
 
@@ -89,10 +107,24 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
 
         const content = e.target['content'].value;
         document.getElementById('post-gif-search-'+id).style.display = 'none'
+        
+        if((content === null || content === "") && image === null) {
+            alert("You can't send a blank comment")
+            return
+        }
 
         e.target['content'].value = '';
+
         if(id){
-            createComment(content,id).then(() => {
+
+            createComment(content,id).then((comment) => {
+                    
+                if(image != null){
+                    console.log("image submitted");
+                    uploadPhoto(comment.id,image).then(() => {
+                        console.log("Image uploaded successfully");
+                    });
+                }
                 refresh()
             });
         }
@@ -111,6 +143,14 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
     }
 
     function formatContent(text){
+        
+        if(load){
+            for (var i = 0; i < images.length; i++){
+                text += ' :'+ images[i].url +':'
+            }
+            console.log('content :')
+            console.log(text)
+        }
         const tab = text.split(' ');
         let content = [];
 
@@ -149,4 +189,18 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
 
     }
 
+    function handleInputImage(e){
+        const file = Array.from(e.target.files);
+        
+        if(file.length > 0){
+            if(file[0].name.endsWith(".jpg") || file[0].name.endsWith(".jpeg") || file[0].name.endsWith(".PNG")){
+            console.log("ok");
+            setImage(file[0]);
+            }
+            else{
+                alert("Invalid file format !");
+                e.target.files = []
+            }
+        }
+      }
 }

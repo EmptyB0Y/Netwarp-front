@@ -79,3 +79,12 @@
 .gifs-anchor:hover{
     cursor: pointer;
 }
+
+.post-content img{
+    max-width: -webkit-fill-available;
+}
+
+.media{
+    display: flex;
+    justify-content: space-between;
+}
