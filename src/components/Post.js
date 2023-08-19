@@ -116,11 +116,11 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
         e.target['content'].value = '';
 
         if(id){
-
             createComment(content,id).then((comment) => {
-                    
                 if(image != null){
                     console.log("image submitted");
+                    console.log(id)
+                    console.log(comment);  
                     uploadPhoto(comment.id,image).then(() => {
                         console.log("Image uploaded successfully");
                     });
@@ -135,7 +135,7 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
     }
     
     function handleDeleteComment(e){
-        console.log(e.target.parentNode.parentNode.parentNode.id)
+
         deleteComment(e.target.parentNode.parentNode.parentNode.id).then((data) =>{
             console.log(data)
             refresh()
@@ -191,7 +191,7 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
 
     function handleInputImage(e){
         const file = Array.from(e.target.files);
-        
+
         if(file.length > 0){
             if(file[0].name.endsWith(".jpg") || file[0].name.endsWith(".jpeg") || file[0].name.endsWith(".PNG")){
             console.log("ok");

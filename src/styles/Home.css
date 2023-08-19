@@ -110,3 +110,19 @@ body{
     border-radius: 5px;
     border: 1px solid black;
 }
+
+@media (max-width: 768px) {
+    .home-root-container {
+        padding: 5%;
+        min-width: initial;
+        min-height: initial;
+    }
+
+    .home-title {
+        font-size: 24px;
+    }
+
+    .posts-container {
+        padding: 5% 0;
+    }
+}

@@ -25,3 +25,12 @@
 .topic-item:hover{
     color:white;
 }
+
+@media (max-width: 768px) {
+    #topic-selector-root-container {
+        top: 55px;
+        padding-top: 10%;
+        min-width: initial;
+        min-height: initial;
+    }
+}

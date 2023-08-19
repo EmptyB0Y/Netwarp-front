@@ -101,3 +101,38 @@ input{
     width: 230px;
     height: 230px;
 }
+
+@media (max-width: 768px) {
+    #login-root-container {
+        top: 0;
+        padding-top: 10%;
+        min-height: initial;
+    }
+
+    #login-container {
+        width: 90%;
+    }
+
+    #login-component {
+        padding: 5%;
+        width: 100%;
+    }
+
+    #login-form-title {
+        margin-left: 0;
+        font-size: 24px;
+    }
+
+    #login-form-container {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #login-link {
+        font-size: 14px;
+    }
+
+    .form-error {
+        width: 100%;
+    }
+}

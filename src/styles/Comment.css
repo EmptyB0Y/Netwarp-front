@@ -81,3 +81,24 @@
 .comment-content img{
     max-width: -webkit-fill-available;
 }
+
+@media (max-width: 768px) {
+    .comment-root-container {
+        width: 90%;
+        padding: 5%;
+    }
+
+    .comment-content {
+        font-size: 14px;
+    }
+
+    .comment-username {
+        font-size: 14px;
+        margin-right: 5px;
+    }
+
+    .comment-options {
+        font-size: 12px;
+        padding-top: 5px;
+    }
+}

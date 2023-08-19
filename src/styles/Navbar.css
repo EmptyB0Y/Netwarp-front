@@ -89,8 +89,8 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    left: -300px;
-    width: 300px;
+    left: -100%;
+    width: 25%;
     height: 700px;
     background-color: #888DBF;
     opacity: 0.9;
@@ -124,8 +124,8 @@
 }
 #notifications{
     position: absolute;
-    right: -300px;
-    width: 300px;
+    right: -100%;
+    width: 25%;
     height: 700px;
     background-color: #888DBF;
     opacity: 0.9;
@@ -143,9 +143,39 @@
 }
 
 @keyframes slideright {
-    100% {left: 0px;}
+    100% {left: 0%;}
 }
 
 @keyframes slideleft {
-    100% {right: 0px;}
+    100% {right: 0%;}
+}
+
+@media (max-width: 768px) {
+    #navbar-root-container {
+        padding: 0;
+        background-color: hsl(275, 19%, 35%);
+    }
+
+    #navbar {
+        padding: 2% 3%;
+        height: auto;
+    }
+
+    #navbar-items {
+        display: none;
+    }
+
+    #menu-button, #notifications-button {
+        display: block;
+        width: 50px;
+        height: 50px;
+    }
+
+    #menu {
+        width: 50%;
+    }
+
+    #notifications {
+        width: 50%;
+    }
 }

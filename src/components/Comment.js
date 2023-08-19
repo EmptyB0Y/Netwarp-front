@@ -126,17 +126,19 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
             createComment(content,PostId,id).then((comment) => {             
                 if(image != null){
                     console.log("image submitted");
+                    console.log(id)
+                    console.log(comment);   
                     uploadPhoto(comment.id,image).then(() => {
-                        console.log("Image uploaded successfully");
+                        console.log("Image uploaded successfully")
                     });
                 }
                 refresh()
-            });
+            })
         }
     }
 
     function handleDeleteComment(e){
-        console.log(e.target.parentNode.parentNode.parentNode.id)
+
         deleteComment(e.target.parentNode.parentNode.parentNode.id).then((data) =>{
             console.log(data)
             refresh()

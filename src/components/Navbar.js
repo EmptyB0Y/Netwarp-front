@@ -82,13 +82,4 @@ export const Navbar = () => {
     navigate('/login');
     window.location.reload();         
     }
-    // function handleClickSignup(){
-    //     ReactDOM.render(<></>, document.getElementById('root'));
-    //     ReactDOM.render(
-    //         <div>
-    //             <Signup />
-    //         </div>,
-    //         document.getElementById('root')
-    //         );
-    // }
 }

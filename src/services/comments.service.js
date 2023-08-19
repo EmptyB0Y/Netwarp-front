@@ -95,7 +95,7 @@ export const uploadPhoto = async (id,file) => {
 
     let fm = new FormData();
     fm.append('image', file);
-
+    console.log(BASE_URL + id +'/upload-photo');
     return axios.post(BASE_URL + id +'/upload-photo',fm,options)
         .then((res) => {return res.data;})
         .catch((err) => err)

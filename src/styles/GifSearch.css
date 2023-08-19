@@ -33,3 +33,9 @@
 .load-gifs-button:hover{
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .gif-search-root-container {
+        width: 100%;
+    }
+}

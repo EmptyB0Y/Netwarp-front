@@ -101,3 +101,46 @@ input{
     width: 230px;
     height: 230px;
 }
+
+@media (max-width: 768px) {
+    #signup-root-container {
+        flex-direction: column;
+        align-items: center;
+        top: 0;
+        padding-top: 10%;
+        height: auto;
+    }
+
+    #signup-container {
+        width: 90%;
+        border-right: none;
+    }
+
+    #signup-component {
+        padding: 5%;
+        width: 100%;
+        margin: 0;
+    }
+
+    #signup-form-title {
+        margin-left: 0;
+        font-size: 24px;
+    }
+
+    #signup-form-container {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #signup-link {
+        font-size: 14px;
+    }
+
+    .form-error {
+        width: 100%;
+    }
+
+    #welcome-container {
+        display: none;
+    }
+}
