@@ -14,7 +14,7 @@ import { GifSearch } from './GifSearch';
 import { uploadPhoto } from '../services/comments.service';
 import { getPhotos } from '../services/posts.service';
 
-export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, createdAt}) => {
+export const Post = ({ProfileId, content, topic, id, deleteFunction, createdAt}) => {
     const [profile,setProfile] = useState(null);
     const [change,setChange] = useState(false);
     const [image,setImage] = useState(null);
@@ -119,8 +119,6 @@ export const Post = ({ProfileId, MissionId, content, topic, id, deleteFunction, 
             createComment(content,id).then((comment) => {
                 if(image != null){
                     console.log("image submitted");
-                    console.log(id)
-                    console.log(comment);  
                     uploadPhoto(comment.id,image).then(() => {
                         console.log("Image uploaded successfully");
                     });

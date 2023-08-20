@@ -1,0 +1,26 @@
+.notification-root-container{
+    background-color: #ffffff;
+    padding: 10px;
+    margin: 5px;
+}
+.notification-root-container:hover{
+    border: 1px solid black;
+}
+.notification-root-container a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.notification-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.delete-notification{
+    width: 10px;
+    height: 10px;
+}
+
+.delete-notification:hover{
+    cursor: pointer;
+}

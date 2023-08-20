@@ -42,3 +42,23 @@ export const textSearchProfiles = async (query) => {
       .then((res) => {return res.data;})
       .catch((err) => err)
 }
+
+export const getNotificationsByProfile = async (id) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    return axios.get(BASE_URL+id+'/notifications',options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}
+
+export const deleteNotification = async (id) => {
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    return axios.delete(BASE_URL+'notifications/'+id,options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}

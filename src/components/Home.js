@@ -40,7 +40,7 @@ export const Home = () => {
     if(load){
 
         postsElement = (posts.map(post => 
-        <div className='post' id={'post-'+post.id} key={'post-'+post.id}>
+        <div className='post' id={'post-'+post.id} key={post.id}>
             <Post ProfileId={post.ProfileId} MissionId={post.MissionId} content={post.content} topic={post.topic} id={post.id} deleteFunction={handleDeletePost} createdAt={post.createdAt}/> 
         </div>))
 

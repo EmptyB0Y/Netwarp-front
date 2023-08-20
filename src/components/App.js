@@ -5,6 +5,7 @@ import { Navbar } from './Navbar'
 import { Profile } from './Profile'
 import { TopicSelector } from './TopicSelector'
 import { FocusPost } from './FocusPost'
+import { FocusComment } from './FocusComment'
 import { Footer } from './Footer'
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/home/:topicDefault" element={ <Home />}></Route>
           <Route path="/profile/:id" element={ <Profile /> }></Route>
           <Route path="/focus-post/:id" element={ <FocusPost /> }></Route>
+          <Route path="/focus-comment/:id" element={ <FocusComment /> }></Route>
           <Route path="/topics" element={ <TopicSelector /> }></Route>
       </Routes>
       <Footer />

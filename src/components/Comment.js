@@ -126,8 +126,6 @@ export const Comment = ({ProfileId, PostId, content, id, level, deleteFunction, 
             createComment(content,PostId,id).then((comment) => {             
                 if(image != null){
                     console.log("image submitted");
-                    console.log(id)
-                    console.log(comment);   
                     uploadPhoto(comment.id,image).then(() => {
                         console.log("Image uploaded successfully")
                     });

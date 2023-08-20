@@ -7,21 +7,43 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getProfile } from '../services/profiles.service'
 import { useState, useEffect } from 'react'
+import { getNotificationsByProfile } from '../services/profiles.service'
+import { Notification } from './Notification'
+import { deleteNotification } from '../services/profiles.service'
 
 export const Navbar = () => {
     const navigate = useNavigate();
 
     const [profile,setProfile] = useState(null);
+    const [notifications, setNotifications] = useState([]);
+    const [load,setLoad] = useState(false);
+    const [change,setChange] = useState(false);
 
     useEffect(() => {
         getProfile(sessionStorage.getItem('profileId'))
         .then(data => {
             setProfile(data)
+            getNotificationsByProfile(profile.id).then(data => {
+                console.log(data);
+                setNotifications(data.reverse())
+                setLoad(true)
+            });
         })
         .catch((err) => console.log(err))
-  }, [])
+    }, [change])
+
+    const refresh = () => {
+        setChange(!change);
+    }
 
     if(sessionStorage.getItem('token')){
+        let notificationItem = (
+                <div id='notifications-list'>
+                    {notifications.map(notification => 
+                    <Notification id={notification.id} ProfileId={notification.ProfileId} content={notification.content} createdAt={notification.createdAt} target={notification.target} key={notification.id} deleteFunction={handleClickCross}/>)}
+                </div>
+            )
+        
         let profileItem = (                            
             <span id='profile' className='menu-item'>
                 <img alt='Profile' id='navbar-profile-picture' src={picture}></img>
@@ -55,6 +77,7 @@ export const Navbar = () => {
                     <button id='notifications-button'>
                         <img id='bell-icon' alt='notifications' src={bell}/>
                         <div id='notifications'>
+                            {notificationItem}
                         </div>
                     </button>
                 </div>
@@ -79,7 +102,19 @@ export const Navbar = () => {
     function handleClick(){
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('profileId')
+    sessionStorage.removeItem('access')
     navigate('/login');
     window.location.reload();         
+    }
+
+    function handleClickCross(e) {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log(e.target.parentNode.parentNode.parentNode)
+        deleteNotification(e.target.parentNode.parentNode.parentNode.id).then(() => {
+            console.log('Notification deleted')
+            e.target.parentNode.parentNode.style.display = 'none'
+            refresh()
+        })
     }
 }
