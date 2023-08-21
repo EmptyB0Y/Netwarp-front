@@ -23,7 +23,7 @@ export const Navbar = () => {
         getProfile(sessionStorage.getItem('profileId'))
         .then(data => {
             setProfile(data)
-            getNotificationsByProfile(profile.id).then(data => {
+            getNotificationsByProfile(data.id).then(data => {
                 console.log(data);
                 setNotifications(data.reverse())
                 setLoad(true)
@@ -43,7 +43,9 @@ export const Navbar = () => {
                     <Notification id={notification.id} ProfileId={notification.ProfileId} content={notification.content} createdAt={notification.createdAt} target={notification.target} key={notification.id} deleteFunction={handleClickCross}/>)}
                 </div>
             )
-        
+        if(notifications.length === 0){
+            notificationItem = <p>All caught up !</p>
+        }
         let profileItem = (                            
             <span id='profile' className='menu-item'>
                 <img alt='Profile' id='navbar-profile-picture' src={picture}></img>
@@ -110,8 +112,10 @@ export const Navbar = () => {
     function handleClickCross(e) {
         e.preventDefault()
         e.stopPropagation()
-        console.log(e.target.parentNode.parentNode.parentNode)
-        deleteNotification(e.target.parentNode.parentNode.parentNode.id).then(() => {
+        let idNotification = e.target.parentNode.parentNode.id.substring(13)
+        
+        console.log(idNotification)
+        deleteNotification(idNotification).then(() => {
             console.log('Notification deleted')
             e.target.parentNode.parentNode.style.display = 'none'
             refresh()

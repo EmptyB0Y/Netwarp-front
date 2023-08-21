@@ -13,7 +13,7 @@ export const Notification = ({id, ProfileId, content, target, createdAt , delete
     }
     let url = '/'+tab[0]+'/'+tab[1]
 
-    return(<div className="notification-root-container"  onClick={(e) => deleteFunction(e)}>
+    return(<div id={'notification-'+id} className="notification-root-container">
         <div className='notification-top'>
             <p className='createdAt'>{createdAt.substring(0,10) + " " + createdAt.substring(11,16)}</p>    
             <img className='delete-notification' src={cross} onClick={(e) => deleteFunction(e)}></img>
