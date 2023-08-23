@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:3000/comments/"
+const BASE_URL = process.env.REACT_APP_BASE_URL + "/comments/"
 
 export const getCommentById= async (commentId) => {
 
@@ -20,7 +20,7 @@ export const getCommentsByPost = async (PostId) => {
     };
 
     
-    return axios.get("http://127.0.0.1:3000/posts/" + PostId +"/comments/",options)
+    return axios.get(process.env.REACT_APP_BASE_URL+"/posts/" + PostId +"/comments/",options)
       .then((res) => {return res.data;})
       .catch((err) => err)
 }

@@ -16,20 +16,20 @@ export const Navbar = () => {
 
     const [profile,setProfile] = useState(null);
     const [notifications, setNotifications] = useState([]);
-    const [load,setLoad] = useState(false);
     const [change,setChange] = useState(false);
 
     useEffect(() => {
-        getProfile(sessionStorage.getItem('profileId'))
-        .then(data => {
-            setProfile(data)
-            getNotificationsByProfile(data.id).then(data => {
-                console.log(data);
-                setNotifications(data.reverse())
-                setLoad(true)
-            });
-        })
-        .catch((err) => console.log(err))
+        if(sessionStorage.getItem('token')){
+            getProfile(sessionStorage.getItem('profileId'))
+            .then(data => {
+                setProfile(sessionStorage.getItem('profileId'))
+                getNotificationsByProfile(data.id).then(data => {
+                    console.log(data);
+                    setNotifications(data.reverse())
+                });
+            })
+            .catch((err) => console.log(err))
+        }
     }, [change])
 
     const refresh = () => {

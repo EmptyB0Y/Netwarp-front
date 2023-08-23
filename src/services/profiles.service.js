@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:3000/profiles/"
+const BASE_URL = process.env.REACT_APP_BASE_URL + "/profiles/"
 
 export const createProfile =  async (username, description="") => {
 
