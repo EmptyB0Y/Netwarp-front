@@ -14,7 +14,7 @@ function App() {
 
   let mainComponent = <Route path="/" element={<Navigate to="/login" />} />
   if(sessionStorage.getItem('token') !== null){
-    mainComponent = <Route path="/" element={<Navigate to="/home" />} />
+    mainComponent = <Route path="/" element={<Navigate to="/home/general" />} />
   }
   const meta = {
     meta: {
