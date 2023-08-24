@@ -8,6 +8,7 @@ import { FocusPost } from './FocusPost'
 import { FocusComment } from './FocusComment'
 import { Footer } from './Footer'
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import DocumentMeta from 'react-document-meta';
 
 function App() {
 
