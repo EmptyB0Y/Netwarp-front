@@ -15,8 +15,17 @@ function App() {
   if(sessionStorage.getItem('token') !== null){
     mainComponent = <Route path="/" element={<Navigate to="/home" />} />
   }
+  const meta = {
+    meta: {
+        httpEquiv:"Content-Security-Policy",
+        content:"upgrade-insecure-requests"
+    }
+  }
+
   return(
   <div>
+    <DocumentMeta {...meta} />
+
   <Router>
       <Navbar />
       <Routes>
