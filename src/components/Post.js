@@ -133,7 +133,7 @@ export const Post = ({ProfileId, content, topic, id, deleteFunction, createdAt})
     }
     
     function handleDeleteComment(e){
-
+        e.preventDefault();
         deleteComment(e.target.parentNode.parentNode.parentNode.id).then((data) =>{
             console.log(data)
             refresh()
@@ -177,6 +177,7 @@ export const Post = ({ProfileId, content, topic, id, deleteFunction, createdAt})
     }
 
     function handleClickGifSearch(e){
+        e.preventDefault();
 
         if(document.getElementById('post-gif-search-'+id).style.display == 'none'){
             document.getElementById('post-gif-search-'+id).style.display = 'block'
@@ -188,6 +189,8 @@ export const Post = ({ProfileId, content, topic, id, deleteFunction, createdAt})
     }
 
     function handleInputImage(e){
+        e.preventDefault();
+
         const file = Array.from(e.target.files);
 
         if(file.length > 0){

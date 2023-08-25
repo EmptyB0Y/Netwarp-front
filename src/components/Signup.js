@@ -127,7 +127,7 @@ export const Signup = () => {
                         if(data.token){
                             sessionStorage.setItem("profileId",data.profileId);
                             sessionStorage.setItem("token",data.token);
-
+                            sessionStorage.setItem("access", data.access)
                             createProfile(username).then( () => {
                                 navigate('/home/general');   
                                 window.location.reload();         
