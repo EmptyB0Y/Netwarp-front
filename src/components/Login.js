@@ -27,7 +27,7 @@ export const Login = () => {
                                     <button id='submit-button' name='submit'><img alt='submit' id='arrow-submit' src={arrow}></img></button>
                                 </form>
                                 <p className='login-form-error' id='login-error'>Login failed</p>
-                                <Link to={'/signup'} id="signup-link"> Sign up here </Link>
+                                <Link to={'/signup/0'} id="signup-link"> Sign up here </Link>
                             </div>
                         </div>
                     </div>
