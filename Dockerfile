@@ -1,7 +1,7 @@
-FROM node:16-alpine
+FROM node:16-alpine AS build
 ENV NODE_ENV=production
 
-WORKDIR /
+WORKDIR /usr/src/app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
@@ -9,5 +9,8 @@ RUN npm install --production
 
 COPY . .
 
-CMD ["npm", "start"]
+RUN npm run build
+
+RUN npm install -g serve
+RUN serve -s build
 
