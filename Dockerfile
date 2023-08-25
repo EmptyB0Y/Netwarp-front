@@ -1,7 +1,7 @@
-FROM node:16-alpine AS build
+FROM node:16-alpine
 ENV NODE_ENV=production
 
-WORKDIR /usr/src/app
+WORKDIR /
 
 COPY ["package.json", "package-lock.json*", "./"]
 
@@ -9,9 +9,5 @@ RUN npm install --production
 
 COPY . .
 
-RUN npm run build
-
-### STAGE 2: Run ###
-FROM nginx:alpine
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
+CMD ["npm", "start"]
 
