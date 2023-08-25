@@ -20,7 +20,7 @@ export const GifSearch = ({place}) =>{
     async function fetchGifs() {
         try {
         const API_KEY = 'EP7RKmRrQ1bMjBgJAFIR01e0FLIh7ds8';
-        const BASE_URL = 'http://api.giphy.com/v1/gifs/search';
+        const BASE_URL = 'https://api.giphy.com/v1/gifs/search';
         
         fetch(`${BASE_URL}?api_key=${API_KEY}&q=${term}`)
         .then((resJson)=>{
