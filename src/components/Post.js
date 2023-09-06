@@ -146,8 +146,6 @@ export const Post = ({ProfileId, content, topic, id, deleteFunction, createdAt})
             for (var i = 0; i < images.length; i++){
                 text += ' :'+ images[i].url +':'
             }
-            console.log('content :')
-            console.log(text)
         }
         const tab = text.split(' ');
         let content = [];

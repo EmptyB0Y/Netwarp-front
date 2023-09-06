@@ -22,9 +22,8 @@ export const Navbar = () => {
         if(sessionStorage.getItem('token')){
             getProfile(sessionStorage.getItem('profileId'))
             .then(data => {
-                setProfile(sessionStorage.getItem('profileId'))
+                setProfile(data)
                 getNotificationsByProfile(data.id).then(data => {
-                    console.log(data);
                     setNotifications(data.reverse())
                 });
             })
