@@ -53,3 +53,9 @@
     max-height: 200px;
     min-height: 200px;
 }
+
+#description-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

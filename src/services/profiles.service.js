@@ -43,6 +43,26 @@ export const textSearchProfiles = async (query) => {
       .catch((err) => err)
 }
 
+export const editProfile = async (id,username,description,pictureUrl=null) => {
+
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    const bodyParameters = {
+        username : username,
+        description : description
+    };
+    
+    if(pictureUrl != null) {
+        bodyParameters.pictureUrl = pictureUrl;
+    }
+
+    return axios.put(BASE_URL+id, bodyParameters,options)
+      .then((res) => {return res.data.dataValues;})
+      .catch((err) => err)
+}
+
 export const getNotificationsByProfile = async (id) => {
     const options = {
         headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
