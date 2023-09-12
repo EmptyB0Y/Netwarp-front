@@ -12,6 +12,7 @@ export const getPosts = async (topic) => {
     if(topic != 'general'){
         url = BASE_URL+"topic/"+topic
     }
+    
     return axios.get(url,options)
       .then((res) => {return res.data;})
       .catch((err) => err)
@@ -74,6 +75,16 @@ export const getPhotos = async (id) => {
         .then((res) => {return res.data;})
         .catch((err) => err)
 }
+
+export const getPostsByProfile = async (id) =>{
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    return axios.get(BASE_URL + "profile/" +id,options)
+        .then((res) => {return res.data;})
+        .catch((err) => err)
+} 
 
 export const uploadPhoto = async (id,file) => {
     const options = {

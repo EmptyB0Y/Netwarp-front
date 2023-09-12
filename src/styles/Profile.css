@@ -2,8 +2,54 @@
     position: relative;
     top: 70px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding-top: 5%;
     min-width: 500px;
     height: 695px;
+}
+#profile-frame{
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 1000px;
+}
+#profile-picture-frame{
+    width: 100px;
+    height: 100px;
+}
+
+#profile-picture{
+    width: 100px;
+    height: 100px;
+}
+
+#profile-infos-frame{
+    align-self: center;
+}
+#profile-infos-frame p{
+    font-size: 20px;
+}
+
+#username{
+    font-weight: bold;
+}
+
+#description-frame{
+    display: flex;
+    flex-direction: column;
+}
+#description-frame p{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#description{
+    overflow-y: scroll;
+    align-self: center;
+    max-width: 500px;
+    min-width: 500px;
+    max-height: 200px;
+    min-height: 200px;
 }
