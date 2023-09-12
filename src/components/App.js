@@ -7,6 +7,7 @@ import { TopicSelector } from './TopicSelector'
 import { FocusPost } from './FocusPost'
 import { FocusComment } from './FocusComment'
 import { Footer } from './Footer'
+import { Settings } from './Settings'
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import DocumentMeta from 'react-document-meta';
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/focus-post/:id" element={ <FocusPost /> }></Route>
           <Route path="/focus-comment/:id" element={ <FocusComment /> }></Route>
           <Route path="/topics" element={ <TopicSelector /> }></Route>
+          <Route path="/settings" element={ <Settings />}></Route>
       </Routes>
       <Footer />
   </Router> 

@@ -63,6 +63,36 @@ export const editProfile = async (id,username,description,pictureUrl=null) => {
       .catch((err) => err)
 }
 
+export const getUser = async (id) =>{
+        
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+    };
+
+    return axios.get(process.env.REACT_APP_BASE_URL+'/users/'+id, options)
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}
+
+export const deleteUser = async (id,password) =>{
+    
+    const options = {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") },
+        data : {
+            password : password
+        }
+    };
+
+    return axios.delete(process.env.REACT_APP_BASE_URL+'/users/'+id, {
+        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") },
+        data: {
+            password : password
+        }
+    })
+      .then((res) => {return res.data;})
+      .catch((err) => err)
+}
+
 export const getNotificationsByProfile = async (id) => {
     const options = {
         headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
