@@ -3,6 +3,7 @@ import logo from '../assets/Logos/Net-Warp_logo2.png'
 import menu from '../assets/Icons/menu.png'
 import bell from '../assets/Icons/bell.png'
 import picture from '../assets/Icons/default-profile-picture.png'
+import gear from '../assets/Icons/gear.png'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getProfile } from '../services/profiles.service'
@@ -73,6 +74,7 @@ export const Navbar = () => {
                         <div id='menu'>
                             {profileItem}
                             <p className='menu-item' id='signout' onClick={handleClick}>SIGN OUT</p>
+                            <Link to='/settings'><img id='settings' alt='settings' src={gear}></img></Link>
                         </div>
                     </button>
                     <button id='notifications-button'>

@@ -3,7 +3,7 @@ import arrow from '../assets/Icons/arrow-right.webp'
 import logo from '../assets/Logos/Net-Warp_logo.png'
 import {loginUser, signupUser} from '../services/credentials.service'
 import { createProfile } from '../services/profiles.service'
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 
 export const Signup = () => {
@@ -12,7 +12,8 @@ export const Signup = () => {
     const navigate = useNavigate();
 
     if(sessionStorage.getItem('token')){
-        return (<Navigate to='/home/general' />)
+        navigate('/home/general');   
+        window.location.reload();         
     }
 
     let superPasswordElement = (<div></div>);
@@ -125,12 +126,8 @@ export const Signup = () => {
                 else{
                     loginUser(email, password).then((data) => {
                         if(data.token){
-                            sessionStorage.setItem("profileId",data.profileId);
-                            sessionStorage.setItem("token",data.token);
-                            sessionStorage.setItem("access", data.access)
-                            createProfile(username).then( () => {
-                                navigate('/home/general');   
-                                window.location.reload();         
+                            createProfile(data.token,username).then( () => {
+                                navigate('/login');   
                             })
                         }
                         else{

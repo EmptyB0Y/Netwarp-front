@@ -143,6 +143,11 @@
     right: 0px;
 }
 
+#settings{
+    height: 30px;
+    width: 30px;
+}
+
 @keyframes slideright {
     100% {left: 0%;}
 }
