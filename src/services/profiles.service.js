@@ -2,10 +2,10 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL + "/profiles/"
 
-export const createProfile =  async (username, description="") => {
+export const createProfile =  async (token, username, description="") => {
 
     const options = {
-        headers: { Authorization: 'Bearer '+sessionStorage.getItem("token") }
+        headers: { Authorization: 'Bearer '+token }
     };
 
     const bodyParameters = {

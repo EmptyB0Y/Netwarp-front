@@ -126,12 +126,8 @@ export const Signup = () => {
                 else{
                     loginUser(email, password).then((data) => {
                         if(data.token){
-                            sessionStorage.setItem("profileId",data.profileId);
-                            sessionStorage.setItem("token",data.token);
-                            sessionStorage.setItem("access", data.access)
-                            createProfile(username).then( () => {
-                                navigate('/home/general');   
-                                window.location.reload();         
+                            createProfile(data.token,username).then( () => {
+                                navigate('/login');   
                             })
                         }
                         else{

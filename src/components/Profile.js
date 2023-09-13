@@ -23,8 +23,8 @@ export const Profile = () => {
         .then(data => {
             console.log(data);
             setProfile(data)
+            setUsername(data.username)
             if(data.description != null){
-                setUsername(data.username)
                 setDescription(data.description)
             }
         })
