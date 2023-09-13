@@ -1,7 +1,7 @@
 #focus-comment-root-container{
     width: 100%;
     position: relative;
-    top: 130px;
+    top: 150px;
     display: flex;
     flex-direction: column;
     border-radius: 10px;

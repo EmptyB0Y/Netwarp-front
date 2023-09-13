@@ -30,6 +30,7 @@ function App() {
 
   <Router>
       <Navbar />
+      <div id="wrapper">
       <Routes>
           {mainComponent}
           <Route path="/login" element={ <Login />}></Route>
@@ -42,6 +43,7 @@ function App() {
           <Route path="/settings" element={ <Settings />}></Route>
       </Routes>
       <Footer />
+      </div>
   </Router> 
   </div> 
   )
